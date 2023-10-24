@@ -14,6 +14,6 @@ export class AuthRouter extends DolphRouteHandler<Dolph> {
   path: string = '/v1/auth';
 
   initRoutes(): void {
-    this.router.get(`${this.path}/otp`, reqValidatorMiddleware(sendOtp), this.controller.sendOtp);
+    this.router.get(`${this.path}/otp/:email`, reqValidatorMiddleware(sendOtp), this.controller.sendOtp);
   }
 }
