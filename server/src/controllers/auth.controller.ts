@@ -1,4 +1,5 @@
 import { AppServices } from '@/services/app';
+import { sendActivateAccountMail, sendOtpToUsersMail } from '@/services/mail/emails';
 import { DolphControllerHandler } from '@dolphjs/dolph/classes';
 import { BadRequestException, Dolph, SuccessResponse, TryCatchAsyncDec } from '@dolphjs/dolph/common';
 import { Request, Response } from 'express';
@@ -26,16 +27,16 @@ export class AuthController extends DolphControllerHandler<Dolph> {
       user.emailVerified = false;
       await user.save();
 
-      // TODO: send mail here
+      await sendActivateAccountMail(user.email, otp);
     } else {
       if (!user) {
         const newUser = await services.userService.create({ email: req.params.email });
         otp = await newUser.generateOtp();
-        // TODO: send mail here
+        await sendOtpToUsersMail(newUser.email, otp);
       } else {
         // means user exists but did not receive otp so:
         otp = await user.generateOtp();
-        // TODO: send mail here
+        await sendOtpToUsersMail(user.email, otp);
       }
     }
 
