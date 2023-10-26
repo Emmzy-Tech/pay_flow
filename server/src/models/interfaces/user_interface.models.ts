@@ -5,6 +5,7 @@ export interface IUser extends mongoose.Document {
   firstName: string;
   lastName: string;
   otherName: string;
+  type: string;
   position: string;
   email: string;
   password: string;

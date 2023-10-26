@@ -1,2 +1,2 @@
 export const user = 'users';
-export const cache = 'cache';
+export const token = 'tokens';

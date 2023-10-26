@@ -5,3 +5,10 @@ export const sendOtp = {
     email: Joi.string().required().email(),
   }),
 };
+
+export const verifyOtp = {
+  body: Joi.object().keys({
+    otp: Joi.string().required().min(4).max(4).trim(),
+    email: Joi.string().required().trim().email(),
+  }),
+};

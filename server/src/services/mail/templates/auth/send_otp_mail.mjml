@@ -13,7 +13,7 @@
         <mj-text font-size="30px" font-weight="700" color="#06381c" padding-bottom="30px"> You Requested An OTP 🤗 </mj-text>
 
         <mj-text font-size="17px" color="#002" font-weight="400" line-height="27px" padding-bottom="20px">
-          We are glad that you decided to signup for a Hikari account. Input the OTP provided below in order to verify our
+          We are glad that you decided to signup for a PayFlow account. Input the OTP provided below in order to verify our
           email and proceed with registration.
         </mj-text>
 
@@ -24,11 +24,11 @@
 
         <mj-text font-size="18px" color="#002" font-weight="400" line-height="27px" padding-bottom="60px">
           If you received this email without performing the action above please ignore the email
-          <a href="https://" style="color: #06381c"> tech@hikari.xyz </a>
+          <a href="https://" style="color: #06381c"> tech@payflow.xyz </a>
         </mj-text>
 
         <mj-text font-size="17px" color="#002" font-weight="600" padding-bottom="20px">
-          Thank You! @hikari technical team
+          Thank You! @hikariki technical team
         </mj-text>
       </mj-column>
     </mj-section>

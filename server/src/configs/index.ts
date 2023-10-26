@@ -11,9 +11,13 @@ const envSchema = Joi.object()
     CLOUDINARY_SECRET_KEY: Joi.string().required().description('cloudinary secret key'),
     JWT_SECRET: Joi.string().default('2hang-JWT-2hang-SECRET').description('JWT secret key'),
     JWT_ACCESS_EXPIRATION: Joi.number().default(10000).description('seconds after which access tokens expire'),
+    JWT_REFRESH_EXPIRATION: Joi.number().description('seconds after which refresh token expires'),
     SMTP_PASSWORD: Joi.string().required().description('application smtp password'),
     SMTP_USERNAME: Joi.string().description('applications smtp gmail').required(),
     OTP_EXPIRATION: Joi.string().description('otp expiration').default(3600),
+    GOOGLE_CLIENT_ID: Joi.string().required().description('google client id'),
+    GOOGLE_CLIENT_SECRET: Joi.string().required().description('google client secret'),
+    GOOGLE_CALLBACK_URL: Joi.string().required().description('google callback url'),
   })
   .unknown();
 
@@ -31,6 +35,7 @@ export const configs = {
   jwt: {
     secret: envVars.JWT_SECRET,
     expires: envVars.JWT_ACCESS_EXPIRATION,
+    refresh_expires: envVars.JWT_REFRESH_EXPIRATION,
   },
   smtp: {
     user: envVars.SMTP_USERNAME,
@@ -38,5 +43,10 @@ export const configs = {
   },
   otp: {
     expires: envVars.OTP_EXPIRATION,
+  },
+  google: {
+    clientID: envVars.GOOGLE_CLIENT_ID,
+    clientSecret: envVars.GOOGLE_CLIENT_SECRET,
+    callbackURL: envVars.GOOGLE_CALLBACK_URL,
   },
 };

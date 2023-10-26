@@ -19,6 +19,9 @@ const UserSchema = new mongoose.Schema(
       type: String,
       minlength: 2,
     },
+    pics: {
+      type: String,
+    },
     position: {
       type: String,
     },
