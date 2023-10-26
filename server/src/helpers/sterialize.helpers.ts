@@ -12,7 +12,6 @@ export const sterilizeUser = (user: IUser) => {
     companyName,
     taxId,
     taxNo,
-    taxOfficeAddr,
     createdAt,
     officeAddr,
     position,

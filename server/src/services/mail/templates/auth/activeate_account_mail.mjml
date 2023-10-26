@@ -10,12 +10,14 @@
   <mj-body>
     <mj-section>
       <mj-column>
-        <mj-text font-size="30px" font-weight="700" color="#06381c" padding-bottom="30px"> You Requested An OTP 🤗 </mj-text>
+        <mj-text font-size="30px" font-weight="700" color="#000000" padding-bottom="30px"> You Requested An OTP 🤗 </mj-text>
 
-        <mj-text font-size="17px" color="#002" font-weight="400" line-height="27px" padding-bottom="20px">
+        <mj-text font-size="18px" color="#002" font-weight="400" line-height="27px">
           Dear user, you did not complete your registration process so to activate your account, here is your one time
           password (otp):
-          <span font-size="18px" color="#c7722b" font-weight="400">{{otp}} </span>
+        </mj-text>
+        <mj-text font-size="22px" color="#0074F0" font-family="Comic Sans Ms" font-weight="400" padding-bottom="60px">
+          {{otp}}
         </mj-text>
 
         <mj-text font-size="18px" color="#002" font-weight="400" line-height="27px" padding-bottom="60px">
@@ -23,7 +25,7 @@
           <a href="https://" style="color: #06381c"> tech@payflow.xyz </a>
         </mj-text>
 
-        <mj-text font-size="17px" color="#002" font-weight="600" padding-bottom="20px">
+        <mj-text font-size="17px" color="#000000" font-weight="600" padding-bottom="20px">
           Thank You! @hikariki technical team
         </mj-text>
       </mj-column>

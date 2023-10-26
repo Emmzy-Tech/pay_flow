@@ -1,4 +1,6 @@
+import { sterilizeUser } from '@/helpers';
 import { AppServices } from '@/services/app';
+import { generateAuthTokens, logout, verifyToken } from '@/services/helpers';
 import { sendActivateAccountMail, sendOtpToUsersMail } from '@/services/mail/emails';
 import { compareAndValidateStrings } from '@/utils';
 import { DolphControllerHandler } from '@dolphjs/dolph/classes';
@@ -68,5 +70,32 @@ export class AuthController extends DolphControllerHandler<Dolph> {
     if (!(await user.save())) throw new InternalServerErrorException('could not process request');
 
     SuccessResponse({ res, body: { status: 'success', msg: 'emai verified successfully' } });
+  }
+
+  @TryCatchAsyncDec
+  public async logout(req: Request, res: Response) {
+    if (!(await logout(req.body.token))) throw new InternalServerErrorException('cannot process request');
+    SuccessResponse({ res, body: { msg: 'user has been logged out', status: 'success' } });
+  }
+
+  @TryCatchAsyncDec
+  public async refreshTokens(req: Request, res: Response) {
+    const refreshTokenDoc = await verifyToken(req.body.token, 'refresh');
+    const user = await services.userService.findById(refreshTokenDoc.userId);
+
+    if (!user) throw new BadRequestException('refresh token does not match that of any user');
+
+    if (!(await refreshTokenDoc.remove())) throw new InternalServerErrorException('cannot process request');
+
+    const authTokens = await generateAuthTokens(user._id);
+
+    SuccessResponse({
+      res,
+      body: {
+        data: { tokens: authTokens, user: sterilizeUser(user) },
+        msg: 'auth tokens have been refreshed',
+        status: 'success',
+      },
+    });
   }
 }

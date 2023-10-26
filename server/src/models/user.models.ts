@@ -74,9 +74,6 @@ const UserSchema = new mongoose.Schema(
     taxNo: {
       type: String,
     },
-    taxOfficeAddr: {
-      type: String,
-    },
   },
   { timestamps: true, collection: user },
 );

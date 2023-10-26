@@ -3,6 +3,7 @@ import { generateJWTwithHMAC, verifyJWTwithHMAC } from '@dolphjs/dolph/utilities
 import moment = require('moment');
 import { TokenType } from '@models/types';
 import { TokenModel } from '@/models/token.model';
+import { NotFoundException } from '@dolphjs/dolph/common';
 
 export const generateToken = async (id: string) => {
   return generateJWTwithHMAC({
@@ -63,6 +64,16 @@ export const generateAuthTokens = async (userId: string) => {
       expires: moment().add(configs.jwt.refresh_expires, 'days').toDate(),
     },
   };
+};
+
+export const logout = async (refreshToken: string) => {
+  try {
+    const token = await TokenModel.findOne({ token: refreshToken, type: 'refresh' });
+    if (!token) throw new NotFoundException('User token not found');
+    return token.remove();
+  } catch (e) {
+    throw e;
+  }
 };
 
 export const createAuthCookie = async (id: string) => {

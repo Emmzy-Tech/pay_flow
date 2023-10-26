@@ -1,6 +1,6 @@
 import { AuthController } from '@/controllers/auth.controller';
 import { store } from '@/utils';
-import { sendOtp, verifyOtp } from '@/validations';
+import { logout, refreshTokens, sendOtp, verifyOtp } from '@/validations';
 import { DolphRouteHandler } from '@dolphjs/dolph/classes';
 import { Dolph, reqValidatorMiddleware } from '@dolphjs/dolph/common';
 import { NextFunction, Request, Response } from 'express';
@@ -19,6 +19,8 @@ export class AuthRouter extends DolphRouteHandler<Dolph> {
   initRoutes(): void {
     this.router.get(`${this.path}/otp/:email`, reqValidatorMiddleware(sendOtp), this.controller.sendOtp);
     this.router.post(`${this.path}/verify-otp`, reqValidatorMiddleware(verifyOtp), this.controller.verifyOtp);
+    this.router.post(`${this.path}/logout`, reqValidatorMiddleware(logout), this.controller.logout);
+    this.router.get(`${this.path}/refresh-tokens`, reqValidatorMiddleware(refreshTokens), this.controller.refreshTokens);
 
     // ===============================OAUTH===================================
     this.router.get(`${this.path}/signup/google-web`, (req: Request, res: Response) => {

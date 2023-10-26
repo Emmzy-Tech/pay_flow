@@ -12,3 +12,15 @@ export const verifyOtp = {
     email: Joi.string().required().trim().email(),
   }),
 };
+
+export const logout = {
+  body: Joi.object().keys({
+    token: Joi.string().required().trim(),
+  }),
+};
+
+export const refreshTokens = {
+  params: Joi.object().keys({
+    token: Joi.string().required().trim(),
+  }),
+};
