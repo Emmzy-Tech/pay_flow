@@ -1,4 +1,5 @@
 import Joi = require('joi');
+import { password } from './utils/custom.validation';
 
 export const sendOtp = {
   params: Joi.object().keys({
@@ -16,6 +17,13 @@ export const verifyOtp = {
 export const logout = {
   body: Joi.object().keys({
     token: Joi.string().required().trim(),
+  }),
+};
+
+export const login = {
+  body: Joi.object().keys({
+    email: Joi.string().required().trim(),
+    password: Joi.string().min(6).max(30).required().custom(password),
   }),
 };
 

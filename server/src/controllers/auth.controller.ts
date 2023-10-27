@@ -1,4 +1,5 @@
 import { sterilizeUser } from '@/helpers';
+import { user } from '@/models/constants/collection_names.models';
 import { AppServices } from '@/services/app';
 import { generateAuthTokens, logout, verifyToken } from '@/services/helpers';
 import { sendActivateAccountMail, sendOtpToUsersMail } from '@/services/mail/emails';
@@ -10,6 +11,7 @@ import {
   InternalServerErrorException,
   SuccessResponse,
   TryCatchAsyncDec,
+  UnauthorizedException,
 } from '@dolphjs/dolph/common';
 import { Request, Response } from 'express';
 
@@ -97,5 +99,26 @@ export class AuthController extends DolphControllerHandler<Dolph> {
         status: 'success',
       },
     });
+  }
+
+  @TryCatchAsyncDec
+  public async login(req: Request, res: Response) {
+    const { email, password } = req.body;
+
+    const user = await services.userService.findByEmail(email);
+
+    if (!user) throw new BadRequestException('account not found, please input valid login credentials');
+    if (user.authType === 'google')
+      throw new BadRequestException(
+        'these accout seemed to have been registered using google oauth. please use that to login',
+      );
+
+    if (!user.emailVerified) throw new UnauthorizedException('please verify your email to continue');
+
+    if (!(await user.doesPasswordMatch(password)))
+      throw new BadRequestException('invalid credentails. cross-check your login details and try again');
+
+    const tokens = await generateAuthTokens(user._id);
+    SuccessResponse({ res, body: { tokens, user: sterilizeUser(user) } });
   }
 }
