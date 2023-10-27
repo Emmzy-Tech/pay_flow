@@ -2,8 +2,9 @@ import Joi = require('joi');
 import { password } from './utils/custom.validation';
 
 export const sendOtp = {
-  params: Joi.object().keys({
-    email: Joi.string().required().email(),
+  body: Joi.object().keys({
+    email: Joi.string().required().email().trim(),
+    password: Joi.string().min(6).max(30).required().custom(password),
   }),
 };
 
@@ -22,7 +23,7 @@ export const logout = {
 
 export const login = {
   body: Joi.object().keys({
-    email: Joi.string().required().trim(),
+    email: Joi.string().required().trim().email(),
     password: Joi.string().min(6).max(30).required().custom(password),
   }),
 };

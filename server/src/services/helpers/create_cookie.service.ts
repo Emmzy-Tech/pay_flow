@@ -39,7 +39,7 @@ export const saveToken = async (token: string, userId: string, expires: moment.M
 export const verifyToken = async (token: string, type: typeof TokenType) => {
   try {
     const payload = await verifyJWTwithHMAC({ token, secret: configs.jwt.secret });
-    const tokenDoc = await TokenModel.findOne({ token, type, user: payload.sub });
+    const tokenDoc = await TokenModel.findOne({ token, type, userId: payload.sub });
 
     if (!tokenDoc) throw new Error('token not found');
     return tokenDoc;
@@ -69,6 +69,7 @@ export const generateAuthTokens = async (userId: string) => {
 export const logout = async (refreshToken: string) => {
   try {
     const token = await TokenModel.findOne({ token: refreshToken, type: 'refresh' });
+
     if (!token) throw new NotFoundException('User token not found');
     return token.remove();
   } catch (e) {

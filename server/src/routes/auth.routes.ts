@@ -17,12 +17,16 @@ export class AuthRouter extends DolphRouteHandler<Dolph> {
   path: string = '/v1/auth';
 
   initRoutes(): void {
-    this.router.get(`${this.path}/otp/:email`, reqValidatorMiddleware(sendOtp), this.controller.sendOtp);
-    this.router.get(`${this.path}/refresh-tokens`, reqValidatorMiddleware(refreshTokens), this.controller.refreshTokens);
+    this.router.post(`${this.path}/register`, reqValidatorMiddleware(sendOtp), this.controller.sendOtp);
+    this.router.get(
+      `${this.path}/refresh-tokens/:token`,
+      reqValidatorMiddleware(refreshTokens),
+      this.controller.refreshTokens,
+    );
 
     this.router.post(`${this.path}/verify-otp`, reqValidatorMiddleware(verifyOtp), this.controller.verifyOtp);
-    this.router.post(`${this.path}/logout`, reqValidatorMiddleware(logout), this.controller.login);
-    this.router.post(`${this.path}/login`, reqValidatorMiddleware(login), this.controller.logout);
+    this.router.post(`${this.path}/logout`, reqValidatorMiddleware(logout), this.controller.logout);
+    this.router.post(`${this.path}/login`, reqValidatorMiddleware(login), this.controller.login);
 
     // ===============================OAUTH===================================
     this.router.get(`${this.path}/signup/google-web`, (req: Request, res: Response) => {

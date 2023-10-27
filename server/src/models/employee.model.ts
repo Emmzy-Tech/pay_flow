@@ -22,6 +22,11 @@ const EmployeeSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    currency: {
+      type: String,
+      default: 'ngn',
+      enum: ['usd', 'eur', 'ngn', 'pounds'],
+    },
     paymentFreq: {
       type: String,
       default: 'monthly',

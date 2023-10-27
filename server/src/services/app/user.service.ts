@@ -1,13 +1,15 @@
-import { UserModel } from '@/models';
-import { IUser } from '@/models/interfaces';
+import { EmployeeModel, UserModel } from '@/models';
+import { IEmployee, IUser } from '@/models/interfaces';
 import { DolphServiceHandler } from '@dolphjs/dolph/classes';
 import { Dolph } from '@dolphjs/dolph/common';
 import { InjectMongo } from '@dolphjs/dolph/decorators';
 import { mongoose } from '@dolphjs/dolph/packages';
 
 @InjectMongo('userModel', UserModel)
+@InjectMongo('emplyeeModel', EmployeeModel)
 export class UserService extends DolphServiceHandler<Dolph> {
   userModel!: mongoose.Model<IUser, mongoose.PaginateModel<IUser>>;
+  employeeModel!: mongoose.Model<IEmployee, mongoose.PaginateModel<IEmployee>>;
 
   constructor() {
     super('userService');
@@ -43,5 +45,11 @@ export class UserService extends DolphServiceHandler<Dolph> {
 
   public readonly updateBylD = async (_id: string | mongoose.Types.ObjectId | any, data: any) => {
     return this.userModel.findOneAndUpdate({ _id }, data, { new: true });
+  };
+
+  public readonly getEmplyees = async (limit: number, page: number, sortBy: string, orderBy: string, keyword?: string) => {};
+
+  public readonly createEmployee = async (body: any) => {
+    return this.employeeModel.create(body);
   };
 }

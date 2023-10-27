@@ -13,6 +13,7 @@ import {
   TryCatchAsyncDec,
   UnauthorizedException,
 } from '@dolphjs/dolph/common';
+import { hashWithBcrypt } from '@dolphjs/dolph/utilities';
 import { Request, Response } from 'express';
 
 const services = new AppServices();
@@ -24,7 +25,7 @@ export class AuthController extends DolphControllerHandler<Dolph> {
 
   @TryCatchAsyncDec
   public async sendOtp(req: Request, res: Response) {
-    const user = await services.userService.findByEmail(req.params.email);
+    const user = await services.userService.findByEmail(req.body.email);
     const emailTaken = 'an account with this email aready exists, try logging in';
 
     if (user && user.firstName) return new BadRequestException(emailTaken);
@@ -41,7 +42,11 @@ export class AuthController extends DolphControllerHandler<Dolph> {
       await sendActivateAccountMail(user.email, otp);
     } else {
       if (!user) {
-        const newUser = await services.userService.create({ email: req.params.email });
+        const newUser = await services.userService.create({
+          email: req.body.email,
+          password: await hashWithBcrypt({ pureString: req.body.password, salt: 11 }),
+        });
+
         otp = await newUser.generateOtp();
         await sendOtpToUsersMail(newUser.email, otp);
       } else {
@@ -71,7 +76,9 @@ export class AuthController extends DolphControllerHandler<Dolph> {
 
     if (!(await user.save())) throw new InternalServerErrorException('could not process request');
 
-    SuccessResponse({ res, body: { status: 'success', msg: 'emai verified successfully' } });
+    const tokens = await generateAuthTokens(user._id);
+
+    SuccessResponse({ res, body: { status: 'success', msg: 'emai verified successfully', data: tokens } });
   }
 
   @TryCatchAsyncDec
@@ -82,7 +89,8 @@ export class AuthController extends DolphControllerHandler<Dolph> {
 
   @TryCatchAsyncDec
   public async refreshTokens(req: Request, res: Response) {
-    const refreshTokenDoc = await verifyToken(req.body.token, 'refresh');
+    const refreshTokenDoc = await verifyToken(req.params.token, 'refresh');
+
     const user = await services.userService.findById(refreshTokenDoc.userId);
 
     if (!user) throw new BadRequestException('refresh token does not match that of any user');

@@ -5,6 +5,7 @@ export interface IEmployee extends mongoose.Document {
   accountNo: string;
   bankName: string;
   amount: number;
+  currency: string;
   paymentFreq: string;
   createdAt: Date;
   updatedAt: Date;
