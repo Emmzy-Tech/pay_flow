@@ -1,7 +1,9 @@
-import { appInDevMode, appInProdMode } from '@/utils';
+import { appInDevMode, appInProdMode, toHmac } from '@/utils';
 import { SendMoneyType } from './types/opay_types.service';
 import { postRequest } from './api_requests.service';
 import { isSuccessfulRes } from './response_check.service';
+import { configs } from '@/configs';
+import { createHmac } from 'crypto';
 
 export class Opay {
   private readonly sandboxUrl = 'http://sandbox-cashierapi.opayweb.com/api/v3';
@@ -11,18 +13,28 @@ export class Opay {
 
   public readonly sendToBank = async ({ reference, amount, currency, country, receiver, reason }: SendMoneyType) => {
     const endpoint = `${this.url}/transfer/toBank`;
-    const headers = {};
     const data = {
-      reference,
       amount,
       country,
       currency,
-      receiver,
       reason,
+      receiver,
+      reference,
     };
 
+    const authorization = toHmac(data, configs.opay.secret);
+
     try {
-      const res = await postRequest({ endpoint, data, headers });
+      const res = await postRequest({
+        endpoint,
+        data,
+        headers: {
+          Authorization: authorization,
+          'Content-Type': 'application/json',
+          MerchantID: configs.opay.id,
+        },
+      });
+
       console.log(res.data);
 
       if (isSuccessfulRes(res)) return res.data;

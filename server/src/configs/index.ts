@@ -18,6 +18,9 @@ const envSchema = Joi.object()
     GOOGLE_CLIENT_ID: Joi.string().required().description('google client id'),
     GOOGLE_CLIENT_SECRET: Joi.string().required().description('google client secret'),
     GOOGLE_CALLBACK_URL: Joi.string().required().description('google callback url'),
+    OPAY_SECRET_KEY: Joi.string().required().description('opay merchant secret key'),
+    OPAY_PUBLIC_KEY: Joi.string().required().description('opay merchant public key'),
+    OPAY_MERCHANT_ID: Joi.string().required().description("opay merchant's id"),
   })
   .unknown();
 
@@ -48,5 +51,10 @@ export const configs = {
     clientID: envVars.GOOGLE_CLIENT_ID,
     clientSecret: envVars.GOOGLE_CLIENT_SECRET,
     callbackURL: envVars.GOOGLE_CALLBACK_URL,
+  },
+  opay: {
+    secret: envVars.OPAY_SECRET_KEY,
+    publicKey: envVars.OPAY_PUBLIC_KEY,
+    id: envVars.OPAY_MERCHANT_ID,
   },
 };
