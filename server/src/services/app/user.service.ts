@@ -6,7 +6,7 @@ import { InjectMongo } from '@dolphjs/dolph/decorators';
 import { mongoose } from '@dolphjs/dolph/packages';
 
 @InjectMongo('userModel', UserModel)
-@InjectMongo('emplyeeModel', EmployeeModel)
+@InjectMongo('employeeModel', EmployeeModel)
 export class UserService extends DolphServiceHandler<Dolph> {
   userModel!: mongoose.Model<IUser, mongoose.PaginateModel<IUser>>;
   employeeModel!: mongoose.Model<IEmployee, mongoose.PaginateModel<IEmployee>>;
@@ -50,6 +50,20 @@ export class UserService extends DolphServiceHandler<Dolph> {
   public readonly getEmplyees = async (limit: number, page: number, sortBy: string, orderBy: string, keyword?: string) => {};
 
   public readonly createEmployee = async (body: any) => {
+    body.amount = parseInt(body.amount).toFixed(2);
     return this.employeeModel.create(body);
+  };
+
+  public readonly updateEmployee = async (id: string, body: any) => {
+    if (body.amount) body.amount = parseInt(body.amount).toFixed(2);
+    return this.employeeModel.findByIdAndUpdate(id, body, { new: true });
+  };
+
+  public readonly getEmployeeById = async (id: string) => {
+    return this.employeeModel.findById(id);
+  };
+
+  public readonly deleteEmployee = async (id: string) => {
+    return this.employeeModel.findByIdAndDelete(id);
   };
 }

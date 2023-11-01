@@ -36,7 +36,7 @@ export class UsersController extends DolphControllerHandler<Dolph> {
   public async updatePics(req: Request, res: Response) {
     //@ts-expect-error
     const { file, payload } = req;
-    const url = await uploadOneToCloud(file);
+    const url = await uploadOneToCloud(file.path);
 
     if (!url) throw new InternalServerErrorException("cannot upload user's pics");
 
@@ -51,6 +51,34 @@ export class UsersController extends DolphControllerHandler<Dolph> {
   public async addEmployee(req: Request, res: Response) {
     const newEmployee = await services.userService.createEmployee(req.body);
     if (!newEmployee) throw new InternalServerErrorException('cannot process request');
-    SuccessResponse({ res, body: newEmployee, status: 201 });
+    SuccessResponse({
+      res,
+      body: { data: newEmployee, msg: 'employee added successfully', status: 'success' },
+      status: 201,
+    });
+  }
+
+  @TryCatchAsyncDec
+  @JWTAuthVerifyDec(configs.jwt.secret)
+  public async updateEmployee(req: Request, res: Response) {
+    const employee = await services.userService.updateEmployee(req.body.id, { ...req.body });
+    if (!employee) throw new InternalServerErrorException('cannot process request');
+    SuccessResponse({ res, body: { data: employee, msg: 'employee details updated', status: 'success' } });
+  }
+
+  @TryCatchAsyncDec
+  @JWTAuthVerifyDec(configs.jwt.secret)
+  public async getEmployeeById(req: Request, res: Response) {
+    const employee = await services.userService.getEmployeeById(req.params.id);
+    if (!employee) throw new NotFoundException('employee not found');
+    SuccessResponse({ res, body: { data: employee, msg: "successfully fetched employee's data", status: 'success' } });
+  }
+
+  @TryCatchAsyncDec
+  @JWTAuthVerifyDec(configs.jwt.secret)
+  public async removeEmployee(req: Request, res: Response) {
+    const employee = await services.userService.deleteEmployee(req.params.id);
+    if (!employee) throw new NotFoundException('employee not found');
+    SuccessResponse({ res, body: { msg: 'successfully removed employee from company database', status: 'success' } });
   }
 }
