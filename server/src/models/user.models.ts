@@ -74,6 +74,17 @@ const UserSchema = new mongoose.Schema(
     taxNo: {
       type: String,
     },
+    balance: {
+      type: Number,
+      default: 0,
+    },
+    bank: {
+      type: String,
+      default: 'opay',
+    },
+    accNo: {
+      type: String,
+    },
   },
   { timestamps: true, collection: user },
 );
