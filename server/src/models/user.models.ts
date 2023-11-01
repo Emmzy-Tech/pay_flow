@@ -85,6 +85,9 @@ const UserSchema = new mongoose.Schema(
     accNo: {
       type: String,
     },
+    lastTransactionRef: {
+      type: String,
+    },
   },
   { timestamps: true, collection: user },
 );
