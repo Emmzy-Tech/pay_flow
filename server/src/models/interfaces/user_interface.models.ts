@@ -24,6 +24,7 @@ export interface IUser extends mongoose.Document {
   balance: number;
   bank: string;
   accNo: string;
+  lastTransactionRef: string;
   createdAt: Date;
   updatedAt: Date;
   generateOtp: () => Promise<string>;

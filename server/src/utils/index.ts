@@ -15,3 +15,5 @@ export const appInProdMode = () => {
 export * from './generate_random_nums.utils';
 export * from './compare_and_validate.utils';
 export * from './temp_store.utils';
+export * from './convert_to_hmac.utils';
+export * from './generate_transaction_ref.utils';

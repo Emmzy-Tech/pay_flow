@@ -4,7 +4,7 @@ export type ReciverType = {
   name: string;
   nameCheck?: string;
   bankCode: number;
-  bankAccountNumber: number;
+  bankAccountNumber: string;
 };
 
 export type SendMoneyType = {

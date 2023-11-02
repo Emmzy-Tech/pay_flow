@@ -1,6 +1,7 @@
 database:
   mongo:
-    url: mongodb://localhost:27017/hikari
+    # url: mongodb://localhost:27017/hikari
+    url: mongodb+srv://utibeabasiekong2:suoE9kuNXwG6X48w@cluster0.esbue40.mongodb.net/?retryWrites=true&w=majority
     options:
       autoIndex: true
       useNewUrlParser: true

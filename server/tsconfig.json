@@ -8,6 +8,8 @@
     "useUnknownInCatchVariables": false,
     "strictFunctionTypes": false,
     "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "target": "ES2022",
     "baseUrl": "src",
     "outDir": "app",

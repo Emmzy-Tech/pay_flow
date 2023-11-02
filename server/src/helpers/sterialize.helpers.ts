@@ -22,6 +22,7 @@ export const sterilizeUser = (user: IUser) => {
     balance,
     bank,
     accNo,
+    lastTransactionRef,
   } = user;
 
   return {
@@ -39,6 +40,7 @@ export const sterilizeUser = (user: IUser) => {
     balance,
     bank,
     accNo,
+    lastTransactionRef,
     accountDisabled,
     licenseNo,
     startDate,
