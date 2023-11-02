@@ -1,0 +1,135 @@
+.login__container {
+    background-image: url(../../Assets/background.jpg);
+    background-size: cover;
+    background-position: center center;
+    font-family: "Poppins", sans-serif;
+    background-repeat: no-repeat;
+    background-clip: border-box;
+    background-attachment: fixed;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .form__container {
+    background-color: white;
+    padding: 20px;
+    width: 600px;
+    font-size: 18px;
+  }
+  
+  .log {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .log h2 {
+    color: rgb(0, 153, 255);
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .first__btn {
+    background-color: rgb(37, 37, 247);
+    color: white;
+    font-size: 18px;
+    border: none;
+    width: 550px;
+    padding: 10px 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+  }
+  .google-logo {
+    width: 20px;
+    background-color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+  
+  .first__btn:hover {
+    background-color: rgb(0, 153, 255);
+    transition: 0.5s ease-in-out;
+  }
+  
+  .email__container {
+    margin-left: 24px;
+  }
+  
+  #user__email {
+    width: 500px;
+    padding: 10px 20px;
+    font-size: 18px;
+    margin-top: 10px;
+    border-radius: 5px;
+    outline: none;
+    /* border: none ; */
+  }
+  
+  #user__email:focus {
+    border: rgb(0, 153, 255) 2px solid;
+  }
+  
+  .link {
+    color: rgb(0, 153, 255);
+    text-decoration: none;
+  }
+  .agree {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    font-size: 15px;
+  }
+  
+  /* Change the color of the checkbox */
+  .agree input[type="checkbox"] {
+    margin-right: 10px; /* Optional: Add some right margin */
+    /* appearance: none; Remove the default appearance */
+    width: 20px; /* Set the width of the checkbox */
+    height: 20px; /* Set the height of the checkbox */
+    border: 2px solid #007bff; /* Set the border color */
+    border-radius: 5px; /* Optional: Add border radius for rounded corners */
+    outline: none; /* Remove the default outline */
+  }
+  
+  .line-container {
+    display: flex;
+    align-items: center;
+    width: 80%;
+  }
+  
+  .line {
+    flex-grow: 1;
+    height: 1px;
+    background-color: #000;
+    margin: 0 20px;
+  }
+  
+  .second__btn {
+    background-color: #141414;
+    cursor: pointer;
+    color: white;
+    font-size: 18px;
+    border: none;
+    width: 550px;
+    border-radius: 5px;
+    padding: 10px 40px;
+  }
+  
+  .second__btn:hover {
+    transition: 0.5s ease-in-out;
+    background-color: #312f2f;
+  }
+  
+  .alt {
+    margin: 10% 0;
+  }
+  
