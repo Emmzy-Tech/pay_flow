@@ -1,0 +1,27 @@
+<mjml>
+  <mj-head>
+    <mj-font name="Montserrat" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700" />
+
+    <mj-attributes>
+      <mj-all font-family="Montserrat" />
+    </mj-attributes>
+  </mj-head>
+
+  <mj-body>
+    <mj-section>
+      <mj-column>
+        <mj-text font-size="30px" font-weight="700" color="#000000" padding-bottom="30px">
+          Account Creation Successful 🤗
+        </mj-text>
+
+        <mj-text font-size="17px" color="#002" font-weight="400" line-height="27px" padding-bottom="20px">
+          Hope you are well {{name}}? We are glad you decided to choose PayFlow as your go-to HR payroll software.
+        </mj-text>
+
+        <mj-text font-size="17px" color="#000000" font-weight="600" padding-bottom="20px">
+          Thank You! @hikariki technical team
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
