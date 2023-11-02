@@ -4,6 +4,7 @@ import { configs } from '@/configs';
 import { generateTransactionId } from '@/utils';
 import { Opay } from '../helpers';
 import { processAccountDebit } from './process_acc_debit_job.service';
+import { InternalServerErrorException } from '@dolphjs/dolph/common';
 
 export const processPayment = async ({
   userId,
@@ -32,6 +33,8 @@ export const processPayment = async ({
     });
 
     console.info(creditAccount);
+
+    if (!creditAccount) throw new InternalServerErrorException('cannot process request');
 
     const description = `account debited to pay user ${userId}`;
 

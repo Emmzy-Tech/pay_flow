@@ -42,7 +42,7 @@ export const postRequest = async ({ endpoint, data, headers }: ApiRequest) => {
     }
     return response;
   } catch (e: any) {
-    console.error(`${e.response.status} ${JSON.stringify(e.response.data)}`);
-    throw new Error(e.response);
+    console.error(`${e?.response?.status} ${JSON.stringify(e?.response?.data)}`);
+    throw new Error(e?.response);
   }
 };

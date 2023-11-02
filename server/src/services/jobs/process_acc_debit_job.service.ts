@@ -46,6 +46,7 @@ const createTransactionDocs = async (
     description,
     metaData,
     amount,
+    type: 'debit',
   };
 
   if (session) {

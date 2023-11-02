@@ -9,7 +9,7 @@ export class Opay {
   private readonly sandboxUrl = 'http://sandbox-cashierapi.opayweb.com/api/v3';
   private readonly liveUrl = 'https://cashierapi.opayweb.com/api/v3';
 
-  protected url = !appInProdMode() ? this.sandboxUrl : this.liveUrl;
+  protected url = appInProdMode() ? this.sandboxUrl : this.liveUrl;
 
   public readonly sendToBank = async ({ reference, amount, currency, country, receiver, reason }: SendMoneyType) => {
     const endpoint = `${this.url}/transfer/toBank`;
@@ -23,15 +23,14 @@ export class Opay {
     };
 
     const authorization = toHmac(data, configs.opay.secret);
-
     try {
       const res = await postRequest({
         endpoint,
         data,
         headers: {
-          Authorization: authorization,
+          Authorization: `Bearer ${authorization}`,
           'Content-Type': 'application/json',
-          MerchantID: configs.opay.id,
+          MerchantId: configs.opay.id,
         },
       });
 
