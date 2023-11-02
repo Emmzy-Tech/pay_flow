@@ -1,16 +1,26 @@
-import React from 'react';
-import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import SignUp from './Components/SignUp';
-import Login from './Components/Login';
+import React from "react";
+// import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Register from "./Pages/Register";
+import Login from "./Pages/Login";
+import Dasboard from "./Pages/Dashboard";
+import { DashboardContextProvider } from "./Context/DashboardContext";
 
 function App() {
   return (
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/signup" element={<SignUp />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route
+            path="/dashboard"
+            element={
+              <DashboardContextProvider>
+                <Dasboard />
+              </DashboardContextProvider>
+            }
+          />
         </Routes>
       </div>
     </Router>
