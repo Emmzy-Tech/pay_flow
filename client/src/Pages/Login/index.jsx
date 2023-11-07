@@ -28,7 +28,7 @@ const Login = () => {
             <br />
             <label htmlFor="email">Email Address</label>
 
-            <input type="email" name="email" id="user__email" />
+            <input type="email" name="email" id="user__email" placeholder="Johndoe@email.com" />
           </div>
           <br />
           <br />
