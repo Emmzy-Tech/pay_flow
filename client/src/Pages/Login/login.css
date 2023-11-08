@@ -240,3 +240,14 @@
 #user__details:focus {
   border: rgb(0, 153, 255) 2px solid;
 }
+
+.verify__icon{
+  width: 60px;
+  height: 60px;
+}
+
+.skip{
+  color: #007bff;
+  text-decoration: none;
+  font-size: larger;
+}

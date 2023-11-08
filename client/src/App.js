@@ -6,6 +6,7 @@ import Dasboard from "./Pages/Dashboard";
 import Loginauth from "./Pages/Loginauth"
 import Set2fa from "./Pages/Set2fa"
 import Password from "./Pages/Password";
+import Verifyuser from "./Pages/Verifyuser"
 import Userdetails from "./Pages/Userdetails"
 import { DashboardContextProvider } from "./Context/DashboardContext";
 import "./App.css";
@@ -31,6 +32,7 @@ function App() {
           <Route path="/loginauth" element={<Loginauth/>} />
           <Route path="/twofactorauth" element={<Set2fa/> }/>
           <Route path="/info" element={<Userdetails/>} /> 
+          <Route path="/verified" element={<Verifyuser />} />
         </Routes>
       </div>
     </Router>
