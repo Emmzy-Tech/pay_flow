@@ -106,6 +106,7 @@ export class TransactionService extends DolphServiceHandler<Dolph> {
   };
 
   // this services is responsible for fetching metrics for application
+  // TODO: implement it to work on filter i.e "monthly", "yearly" e.t.c.
   public readonly getmetrics = async () => {
     const transactions = await this.transactionModel.find();
     let totalPaid: number = 0;

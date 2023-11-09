@@ -1,2 +1,5 @@
 - make transactions to work without user inputing amount
 - add an employeeid field so that the employee's id is in transaction schema
+- implement confirm email
+- implement change password
+- implement create transaction pin
