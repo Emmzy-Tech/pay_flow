@@ -25,6 +25,16 @@ export const updateEmployee = {
 
 export const getEmployeeById = {
   params: Joi.object().keys({
-    if: Joi.string().required(),
+    id: Joi.string().required(),
+  }),
+};
+
+export const getEmployees = {
+  query: Joi.object().keys({
+    limit: Joi.number(),
+    page: Joi.number(),
+    keyword: Joi.string(),
+    sortBy: Joi.string(),
+    orderBy: Joi.string(),
   }),
 };
