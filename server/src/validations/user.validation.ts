@@ -23,6 +23,15 @@ export const updateEmployee = {
   }),
 };
 
+export const updateUser = {
+  body: Joi.object().keys({
+    firstName: Joi.string(),
+    lastName: Joi.string(),
+    otherName: Joi.string(),
+    position: Joi.string(),
+  }),
+};
+
 export const getEmployeeById = {
   params: Joi.object().keys({
     id: Joi.string().required(),

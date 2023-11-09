@@ -32,6 +32,16 @@ export class UsersController extends DolphControllerHandler<Dolph> {
 
   @TryCatchAsyncDec
   @JWTAuthVerifyDec(configs.jwt.secret)
+  public async updateUserProfile(req: Request, res: Response) {
+    //@ts-expect-error
+    const user = await services.userService.updateBylD(req.payload.sub, req.body);
+    if (!user) throw new NotFoundException('user not found');
+
+    SuccessResponse({ res, body: sterilizeUser(user) });
+  }
+
+  @TryCatchAsyncDec
+  @JWTAuthVerifyDec(configs.jwt.secret)
   @MediaParser(mediaParserOptions)
   public async updatePics(req: Request, res: Response) {
     //@ts-expect-error
