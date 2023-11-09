@@ -126,7 +126,9 @@ export class AuthController extends DolphControllerHandler<Dolph> {
     if (!(await user.doesPasswordMatch(password)))
       throw new BadRequestException('invalid credentails. cross-check your login details and try again');
 
+    const metrics = await services.transactionService.getmetrics();
+
     const tokens = await generateAuthTokens(user._id);
-    SuccessResponse({ res, body: { tokens, user: sterilizeUser(user) } });
+    SuccessResponse({ res, body: { tokens, user: sterilizeUser(user), metrics } });
   }
 }
