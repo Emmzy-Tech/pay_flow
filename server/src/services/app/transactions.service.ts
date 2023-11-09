@@ -76,14 +76,6 @@ export class TransactionService extends DolphServiceHandler<Dolph> {
         {
           $unwind: '$employeeData',
         },
-
-        // {
-        //   $match: {
-        //     'employeeData.fullname': {
-        //       $regex: new RegExp(queryFromFrontend, 'i'),
-        //     },
-        //   },
-        // },
       ]);
     } else {
       transactions = this.transactionModel.aggregate([

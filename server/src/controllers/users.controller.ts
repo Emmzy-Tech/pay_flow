@@ -76,6 +76,22 @@ export class UsersController extends DolphControllerHandler<Dolph> {
 
   @TryCatchAsyncDec
   @JWTAuthVerifyDec(configs.jwt.secret)
+  public async getEmployees(req: Request, res: Response) {
+    const { limit, page, sortBy, orderBy, keyword } = req.query;
+    const employees = await services.userService.getEmplyees(
+      +limit || 10,
+      +page || 1,
+      sortBy?.toString() || 'asc',
+      orderBy?.toString() || 'fullname',
+      keyword?.toString(),
+    );
+
+    if (!employees) throw new NotFoundException('there are no employees yet');
+    SuccessResponse({ res, body: { data: employees, msg: 'successfully fetched employees', status: 'success' } });
+  }
+
+  @TryCatchAsyncDec
+  @JWTAuthVerifyDec(configs.jwt.secret)
   public async removeEmployee(req: Request, res: Response) {
     const employee = await services.userService.deleteEmployee(req.params.id);
     if (!employee) throw new NotFoundException('employee not found');
