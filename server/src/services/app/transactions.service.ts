@@ -15,7 +15,7 @@ import { IEmployee, IUser } from '@/models/interfaces';
 import { findBankByName } from '@/helpers/match_accout_code_to_name.helpers';
 import { TransactionModel } from '@/models/transaction.model';
 import { ITransactions } from '@/models/interfaces/transactions_interface.model';
-import { employee } from '@/models/constants/collection_names.models';
+import { employee, transaction } from '@/models/constants/collection_names.models';
 
 @InjectMongo('userModel', UserModel)
 @InjectMongo('employeeModel', EmployeeModel)
@@ -103,5 +103,25 @@ export class TransactionService extends DolphServiceHandler<Dolph> {
     }
 
     return transactions;
+  };
+
+  // this services is responsible for fetching metrics for application
+  public readonly getmetrics = async () => {
+    const transactions = await this.transactionModel.find();
+    let totalPaid: number = 0;
+    let totalPending: number = 0;
+    let totalFailed: number = 0;
+
+    transactions.map((trans) => {
+      if (trans.status == 'success') {
+        totalPaid += trans.amount;
+      } else if (trans.status === 'pending') {
+        totalPending += trans.amount;
+      } else if (trans.status === 'failed') {
+        totalFailed += trans.amount;
+      }
+    });
+
+    return { totalFailed, totalPaid, totalPending };
   };
 }
