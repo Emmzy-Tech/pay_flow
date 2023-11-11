@@ -12,9 +12,10 @@ import {
   NotFoundException,
   SuccessResponse,
   TryCatchAsyncDec,
+  DRequest,
+  DResponse,
 } from '@dolphjs/dolph/common';
 import { MediaParser, hashWithBcrypt } from '@dolphjs/dolph/utilities';
-import { Request, Response } from 'express';
 
 const services = new AppServices();
 export class UsersController extends DolphControllerHandler<Dolph> {
@@ -24,8 +25,7 @@ export class UsersController extends DolphControllerHandler<Dolph> {
 
   @TryCatchAsyncDec
   @JWTAuthVerifyDec(configs.jwt.secret)
-  public async comfirmPassword(req: Request, res: Response) {
-    //@ts-expect-error
+  public async comfirmPassword(req: DRequest, res: DResponse) {
     const user = await services.userService.findById(req.payload.sub);
     if (!user) throw new NotFoundException('user not found');
 
@@ -36,8 +36,7 @@ export class UsersController extends DolphControllerHandler<Dolph> {
 
   @TryCatchAsyncDec
   @JWTAuthVerifyDec(configs.jwt.secret)
-  public async updatePassword(req: Request, res: Response) {
-    //@ts-expect-error
+  public async updatePassword(req: DRequest, res: DResponse) {
     const user = await services.userService.findById(req.payload.sub);
     if (!user) throw new NotFoundException('user not found');
 
@@ -52,8 +51,7 @@ export class UsersController extends DolphControllerHandler<Dolph> {
 
   @TryCatchAsyncDec
   @JWTAuthVerifyDec(configs.jwt.secret)
-  public async getUserProfile(req: Request, res: Response) {
-    //@ts-expect-error
+  public async getUserProfile(req: DRequest, res: DResponse) {
     const user = await services.userService.findById(req.payload.sub);
     if (!user) throw new NotFoundException('user not found');
 
@@ -62,8 +60,7 @@ export class UsersController extends DolphControllerHandler<Dolph> {
 
   @TryCatchAsyncDec
   @JWTAuthVerifyDec(configs.jwt.secret)
-  public async updateUserProfile(req: Request, res: Response) {
-    //@ts-expect-error
+  public async updateUserProfile(req: DRequest, res: DResponse) {
     const user = await services.userService.updateBylD(req.payload.sub, req.body);
     if (!user) throw new NotFoundException('user not found');
 
@@ -73,10 +70,11 @@ export class UsersController extends DolphControllerHandler<Dolph> {
   @TryCatchAsyncDec
   @JWTAuthVerifyDec(configs.jwt.secret)
   @MediaParser(mediaParserOptions)
-  public async updatePics(req: Request, res: Response) {
+  public async updatePics(req: DRequest, res: DResponse) {
+    const { payload } = req;
+
     //@ts-expect-error
-    const { file, payload } = req;
-    const url = await uploadOneToCloud(file.path);
+    const url = await uploadOneToCloud(req.file?.path);
 
     if (!url) throw new InternalServerErrorException("cannot upload user's pics");
 
@@ -88,7 +86,7 @@ export class UsersController extends DolphControllerHandler<Dolph> {
 
   @TryCatchAsyncDec
   @JWTAuthVerifyDec(configs.jwt.secret)
-  public async addEmployee(req: Request, res: Response) {
+  public async addEmployee(req: DRequest, res: DResponse) {
     const newEmployee = await services.userService.createEmployee(req.body);
     if (!newEmployee) throw new InternalServerErrorException('cannot process request');
     SuccessResponse({
@@ -100,7 +98,7 @@ export class UsersController extends DolphControllerHandler<Dolph> {
 
   @TryCatchAsyncDec
   @JWTAuthVerifyDec(configs.jwt.secret)
-  public async updateEmployee(req: Request, res: Response) {
+  public async updateEmployee(req: DRequest, res: DResponse) {
     const employee = await services.userService.updateEmployee(req.body.id, { ...req.body });
     if (!employee) throw new InternalServerErrorException('cannot process request');
     SuccessResponse({ res, body: { data: employee, msg: 'employee details updated', status: 'success' } });
@@ -108,7 +106,7 @@ export class UsersController extends DolphControllerHandler<Dolph> {
 
   @TryCatchAsyncDec
   @JWTAuthVerifyDec(configs.jwt.secret)
-  public async getEmployeeById(req: Request, res: Response) {
+  public async getEmployeeById(req: DRequest, res: DResponse) {
     const employee = await services.userService.getEmployeeById(req.params.id);
     if (!employee) throw new NotFoundException('employee not found');
     SuccessResponse({ res, body: { data: employee, msg: "successfully fetched employee's data", status: 'success' } });
@@ -116,7 +114,7 @@ export class UsersController extends DolphControllerHandler<Dolph> {
 
   @TryCatchAsyncDec
   @JWTAuthVerifyDec(configs.jwt.secret)
-  public async getEmployees(req: Request, res: Response) {
+  public async getEmployees(req: DRequest, res: DResponse) {
     const { limit, page, sortBy, orderBy, keyword } = req.query;
     const employees = await services.userService.getEmplyees(
       +limit || 10,
@@ -132,7 +130,7 @@ export class UsersController extends DolphControllerHandler<Dolph> {
 
   @TryCatchAsyncDec
   @JWTAuthVerifyDec(configs.jwt.secret)
-  public async removeEmployee(req: Request, res: Response) {
+  public async removeEmployee(req: DRequest, res: DResponse) {
     const employee = await services.userService.deleteEmployee(req.params.id);
     if (!employee) throw new NotFoundException('employee not found');
     SuccessResponse({ res, body: { msg: 'successfully removed employee from company database', status: 'success' } });
