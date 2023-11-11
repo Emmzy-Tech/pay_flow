@@ -1,5 +1,13 @@
 import { UsersController } from '@/controllers/users.controller';
-import { confirmPassword, getEmployeeById, getEmployees, newEmployee, updateEmployee, updateUser } from '@/validations';
+import {
+  confirmPassword,
+  getEmployeeById,
+  getEmployees,
+  newEmployee,
+  updateEmployee,
+  updatePassword,
+  updateUser,
+} from '@/validations';
 import { DolphRouteHandler } from '@dolphjs/dolph/classes';
 import { Dolph, reqValidatorMiddleware } from '@dolphjs/dolph/common';
 
@@ -24,6 +32,8 @@ export class UserRouter extends DolphRouteHandler<Dolph> {
     this.router.get(`${this.path}/employees`, reqValidatorMiddleware(getEmployees), this.controller.getEmployees);
 
     this.router.post(`${this.path}/new-employee`, reqValidatorMiddleware(newEmployee), this.controller.addEmployee);
+
+    this.router.put(`${this.path}/update-password`, reqValidatorMiddleware(updatePassword), this.controller.updatePassword);
 
     this.router.put(`${this.path}/`, reqValidatorMiddleware(updateUser), this.controller.updateUserProfile);
 
