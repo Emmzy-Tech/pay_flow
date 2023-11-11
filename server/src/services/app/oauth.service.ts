@@ -26,7 +26,7 @@ export const googleOauth = () => {
 
         const tokens = await generateAuthTokens(user._id);
         const cookie = await createAuthCookie(user._id);
-        console.log(cookie);
+        // console.log(cookie);
         return done(null, { user: sterilizeUser(user), cookie, tokens });
       } else if (store.intent === 'signup') {
         if (user && user.authType === 'google') return done(new Error('user already exists, try loging in'), null);
@@ -47,7 +47,7 @@ export const googleOauth = () => {
 
         const tokens = await generateAuthTokens(userProfile._id);
         const cookie = await createAuthCookie(userProfile._id);
-        console.log(cookie);
+        // console.log(cookie);
         return done(null, { user: sterilizeUser(userProfile), cookie, tokens });
       } else {
         return done(new Error('an error occured: wrong or invalid intent sent'), null);

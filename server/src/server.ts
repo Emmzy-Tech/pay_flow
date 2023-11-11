@@ -1,5 +1,6 @@
 import { DolphFactory } from '@dolphjs/dolph';
 import routes from './routes';
+import { Strategy as JWTStrategy } from 'passport-jwt';
 import passport = require('passport');
 import { initPassport } from './services/helpers/init_passport.service';
 import { googleOauth } from './services/app/oauth.service';
@@ -7,14 +8,17 @@ import expressSession = require('express-session');
 import { configs } from './configs';
 import tooBusy = require('toobusy-js');
 import { ErrorResponse, HttpStatus } from '@dolphjs/dolph/common';
+import { jwtOptions, jwtVerify } from './helpers';
 
 const cookieAge = new Date(new Date().getTime() + 1000 * 60 * 30).getMilliseconds();
+
+passport.use(new JWTStrategy(jwtOptions, jwtVerify));
 
 const dolph = new DolphFactory(routes, [
   expressSession({
     secret: configs.jwt.secret,
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
     cookie: {
       maxAge: cookieAge,
       secure: false,
@@ -22,6 +26,7 @@ const dolph = new DolphFactory(routes, [
     },
   }),
   passport.initialize(),
+  passport.session(),
 ]);
 
 dolph.engine().use((req, res, next) => {
