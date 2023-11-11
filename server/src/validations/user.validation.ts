@@ -1,4 +1,5 @@
 import Joi = require('joi');
+import { password } from './utils/custom.validation';
 
 export const newEmployee = {
   body: Joi.object().keys({
@@ -45,5 +46,11 @@ export const getEmployees = {
     keyword: Joi.string(),
     sortBy: Joi.string(),
     orderBy: Joi.string(),
+  }),
+};
+
+export const confirmPassword = {
+  params: Joi.object().keys({
+    password: Joi.string().min(6).max(30).required().custom(password),
   }),
 };

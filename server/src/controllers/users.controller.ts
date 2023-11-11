@@ -5,7 +5,9 @@ import { AppServices } from '@/services/app';
 import { uploadOneToCloud } from '@/services/helpers';
 import { DolphControllerHandler, JWTAuthVerifyDec } from '@dolphjs/dolph/classes';
 import {
+  BadRequestException,
   Dolph,
+  HttpStatus,
   InternalServerErrorException,
   NotFoundException,
   SuccessResponse,
@@ -18,6 +20,18 @@ const services = new AppServices();
 export class UsersController extends DolphControllerHandler<Dolph> {
   constructor() {
     super();
+  }
+
+  @TryCatchAsyncDec
+  @JWTAuthVerifyDec(configs.jwt.secret)
+  public async comfirmPassword(req: Request, res: Response) {
+    //@ts-expect-error
+    const user = await services.userService.findById(req.payload.sub);
+    if (!user) throw new NotFoundException('user not found');
+
+    if (!(await user.doesPasswordMatch(req.params.password))) throw new BadRequestException('password does not match');
+
+    SuccessResponse({ res, body: { status: 'success', msg: 'password matches' }, status: HttpStatus.ACCEPTED });
   }
 
   @TryCatchAsyncDec

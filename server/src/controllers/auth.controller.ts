@@ -44,7 +44,6 @@ export class AuthController extends DolphControllerHandler<Dolph> {
       if (!user) {
         const newUser = await services.userService.create({
           email: req.body.email,
-          password: await hashWithBcrypt({ pureString: req.body.password, salt: 11 }),
         });
 
         otp = await newUser.generateOtp();
@@ -59,6 +58,19 @@ export class AuthController extends DolphControllerHandler<Dolph> {
     console.info(otp);
 
     SuccessResponse({ res, body: { status: 'success', msg: 'otp sent' } });
+  }
+
+  @TryCatchAsyncDec
+  public async addPassword(req: Request, res: Response) {
+    const user = await services.userService.findByEmail(req.body.email);
+
+    if (!user) throw new BadRequestException('user not found');
+
+    user.password = await hashWithBcrypt({ pureString: req.body.password, salt: 11 });
+
+    if (!(await user.save())) throw new InternalServerErrorException('cannot process request');
+
+    SuccessResponse({ res, body: { status: 'success', msg: 'password set successfully' } });
   }
 
   @TryCatchAsyncDec
