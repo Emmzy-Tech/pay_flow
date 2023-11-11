@@ -13,7 +13,7 @@ import {
   SuccessResponse,
   TryCatchAsyncDec,
 } from '@dolphjs/dolph/common';
-import { MediaParser } from '@dolphjs/dolph/utilities';
+import { MediaParser, hashWithBcrypt } from '@dolphjs/dolph/utilities';
 import { Request, Response } from 'express';
 
 const services = new AppServices();
@@ -32,6 +32,22 @@ export class UsersController extends DolphControllerHandler<Dolph> {
     if (!(await user.doesPasswordMatch(req.params.password))) throw new BadRequestException('password does not match');
 
     SuccessResponse({ res, body: { status: 'success', msg: 'password matches' }, status: HttpStatus.ACCEPTED });
+  }
+
+  @TryCatchAsyncDec
+  @JWTAuthVerifyDec(configs.jwt.secret)
+  public async updatePassword(req: Request, res: Response) {
+    //@ts-expect-error
+    const user = await services.userService.findById(req.payload.sub);
+    if (!user) throw new NotFoundException('user not found');
+
+    if (!(await user.doesPasswordMatch(req.body.oldPassword))) throw new BadRequestException('old password does not match');
+
+    user.password = await hashWithBcrypt({ pureString: req.body.newPassword, salt: 11 });
+
+    if (!(await user.save())) throw new InternalServerErrorException('cannot process request');
+
+    SuccessResponse({ res, body: { status: 'success', msg: 'password updated' } });
   }
 
   @TryCatchAsyncDec

@@ -35,7 +35,7 @@ export const login = {
 };
 
 export const refreshTokens = {
-  params: Joi.object().keys({
+  param: Joi.object().keys({
     token: Joi.string().required().trim(),
   }),
 };

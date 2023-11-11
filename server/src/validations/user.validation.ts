@@ -34,7 +34,7 @@ export const updateUser = {
 };
 
 export const getEmployeeById = {
-  params: Joi.object().keys({
+  param: Joi.object().keys({
     id: Joi.string().required(),
   }),
 };
@@ -50,7 +50,14 @@ export const getEmployees = {
 };
 
 export const confirmPassword = {
-  params: Joi.object().keys({
+  param: Joi.object().keys({
     password: Joi.string().min(6).max(30).required().custom(password),
+  }),
+};
+
+export const updatePassword = {
+  body: Joi.object().keys({
+    newPassword: Joi.string().min(6).max(30).required().custom(password),
+    oldPassword: Joi.string().min(6).max(30).required().custom(password),
   }),
 };
