@@ -6,6 +6,7 @@ export interface INotification extends mongoose.Document {
   userId: IUser['_id'];
   type: string;
   message: string;
+  isRead: boolean;
   createdAt: Date;
   updatedAt: Date;
 }

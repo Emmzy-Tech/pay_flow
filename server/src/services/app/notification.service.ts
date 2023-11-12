@@ -20,4 +20,27 @@ export class NotificationService extends DolphServiceHandler<Dolph> {
   constructor() {
     super('notificationService');
   }
+
+  public readonly createNotification = async (data: any) => {
+    return this.notificationModel.create(data);
+  };
+
+  public readonly getNotifications = async (limit: number, page: number, query?: string) => {
+    let filter: any = {};
+    if (query?.length) {
+      filter = { $or: [{ subject: { $regex: query, $options: 'i' } }, { message: { $regex: query, $options: 'i' } }] };
+    }
+
+    const options = {
+      limit,
+      page,
+      sort: 'asc',
+    };
+    //@ts-expect-error
+    return this.notificationModel.paginate(filter, options);
+  };
+
+  public readonly deleteNotification = async (id: string) => {
+    return this.notificationModel.findByIdAndDelete(id);
+  };
 }

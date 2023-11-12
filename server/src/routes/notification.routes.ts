@@ -13,5 +13,7 @@ export class NotificationRouter extends DolphRouteHandler<Dolph> {
 
   initRoutes(): void {
     this.router.get(`${this.path}/`, this.controller.getNotifications);
+    this.router.get(`${this.path}/`, this.controller.getNotifications);
+    this.router.get(`${this.path}/`, this.controller.getNotifications);
   }
 }
