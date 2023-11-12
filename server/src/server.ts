@@ -9,6 +9,9 @@ import { configs } from './configs';
 import tooBusy = require('toobusy-js');
 import { ErrorResponse, HttpStatus } from '@dolphjs/dolph/common';
 import { jwtOptions, jwtVerify } from './helpers';
+import { createServer } from 'http';
+import { logger } from '@dolphjs/dolph/utilities';
+import { getIo } from './services/sockets.service';
 
 const cookieAge = new Date(new Date().getTime() + 1000 * 60 * 30).getMilliseconds();
 
@@ -29,6 +32,9 @@ const dolph = new DolphFactory(routes, [
   passport.session(),
 ]);
 
+const httpServer = createServer(dolph.engine);
+getIo(httpServer);
+
 dolph.engine().use((req, res, next) => {
   if (tooBusy()) {
     next(
@@ -45,4 +51,7 @@ dolph.engine().use((req, res, next) => {
 initPassport();
 googleOauth();
 
+httpServer.listen(3000, () => {
+  logger.info('socket.io server is running');
+});
 dolph.start();
