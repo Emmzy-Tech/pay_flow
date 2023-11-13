@@ -21,13 +21,13 @@ function App() {
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/register/password" element={<Password />} />
-          <Route path="/twofactorauth" element={<Set2fa/> }/>
-          <Route path="/register/info" element={<Userdetails/>} /> 
-          <Route path="/register/otp" element={<OtpInput/>} />
+          <Route path="/register/twofactorauth" element={<Set2fa/> }/>
+          <Route path="/register/otp" element={<OtpInput isSignup={true}/>} />
           <Route path="/register/verified" element={<Verifyuser />} />
+          <Route path="/register/info" element={<Userdetails/>} /> 
           <Route path="/login" element={<Login />} />
           <Route path="/login/auth" element={<Loginauth/>} />
-          <Route path="/login/otp" element={<OtpInput/>} />
+          <Route path="/login/otp" element={<OtpInput isSignup={false}/>} />
           <Route
             path="/dashboard"
             element={

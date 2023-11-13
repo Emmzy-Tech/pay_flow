@@ -7,7 +7,7 @@ const LoginPwd = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/dashboard");
+    navigate("/login/otp");
   };
 
   return (

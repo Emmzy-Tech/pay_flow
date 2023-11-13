@@ -7,7 +7,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/loginauth");
+    navigate("/login/auth");
   };
 
   return (

@@ -6,7 +6,7 @@ const Password = () => {
 const navigate = useNavigate();
 
 const handleClick = () => {
-    navigate("/twofactorauth")
+    navigate("/register/twofactorauth")
   }  
   return (
     <div className="login__container">

@@ -15,7 +15,7 @@ const OtpInput = ({ isSignup }) => {
     } else {
       navigate('/dashboard'); // Navigate to dashboard for login
     }
-    // navigate("/verified");
+    
   };
   const inputRefs = createInputRefs();
 

@@ -8,7 +8,7 @@ const VerifyUser = () => {
 const navigate = useNavigate();
 
 const handleClick = () => {
-  navigate("/info")
+  navigate("/register/info")
 }
   return (
     <div className="login__container">

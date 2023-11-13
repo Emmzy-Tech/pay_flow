@@ -7,7 +7,7 @@ const SetUpAuth = () => {
 const navigate = useNavigate();
 
 const handleClick = () => {
-    navigate("/otp");
+    navigate("/register/otp");
   };
 
   return (

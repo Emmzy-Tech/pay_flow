@@ -9,7 +9,7 @@ const Register = () => {
 const navigate = useNavigate();
 
 const handleClick = () => {
-    navigate("/password")
+    navigate("/register/password")
   }  
 
   return (
