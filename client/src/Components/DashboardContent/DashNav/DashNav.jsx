@@ -25,6 +25,7 @@ const DashNav = () => {
         width: 64,
         height: 64,
       }}
+      className=""
     />
   </Header>
   )
