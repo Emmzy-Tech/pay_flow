@@ -13,5 +13,5 @@ export type SendMoneyType = {
   currency: currencies;
   country: string;
   receiver: ReciverType;
-  reason: string;
+  reason?: string;
 };
