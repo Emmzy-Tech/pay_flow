@@ -1,7 +1,15 @@
 import React from "react";
 import "../Login/login.css";
+import { useNavigate } from "react-router-dom";
 
-const setUpAuth = () => {
+const SetUpAuth = () => {
+
+const navigate = useNavigate();
+
+const handleClick = () => {
+    navigate("/otp");
+  };
+
   return (
     <div className="login__container">
       <div className="two__container">
@@ -12,7 +20,7 @@ const setUpAuth = () => {
           This gives an extra layer of security to your
           account
         </p>
-        <button type="submit" className="second__btn">
+        <button type="submit" className="second__btn" onClick={handleClick}>
           continue
         </button>
       </div>
@@ -20,4 +28,4 @@ const setUpAuth = () => {
   );
 };
 
-export default setUpAuth;
+export default SetUpAuth;

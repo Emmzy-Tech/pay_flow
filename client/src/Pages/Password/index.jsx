@@ -1,7 +1,13 @@
 import React from "react";
 import "../Login/login.css";
+import { useNavigate } from "react-router-dom";
 
-const password = () => {
+const Password = () => {
+const navigate = useNavigate();
+
+const handleClick = () => {
+    navigate("/twofactorauth")
+  }  
   return (
     <div className="login__container">
       <div className="form__container">
@@ -26,6 +32,7 @@ const password = () => {
             type="submit"
             id="password__btn"
             className="second__btn"
+            onClick={handleClick}
           >
             continue
           </button>
@@ -35,4 +42,4 @@ const password = () => {
   );
 };
 
-export default password;
+export default Password;

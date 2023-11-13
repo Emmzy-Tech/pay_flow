@@ -1,13 +1,20 @@
 import React from "react";
 import "../Login/login.css";
+import { useNavigate } from "react-router-dom";
 
-const loginPwd = () => {
+
+const LoginPwd = () => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/dashboard");
+  };
+
   return (
     <div className="login__container">
       <div className="form__container">
         <div className="password__field">
           <h2>Password</h2>
-        
 
           <label htmlFor="password">
             Enter your password
@@ -21,6 +28,7 @@ const loginPwd = () => {
             type="submit"
             id="password__btn"
             className="second__btn"
+            onClick={handleClick}
           >
             continue
           </button>
@@ -30,4 +38,4 @@ const loginPwd = () => {
   );
 };
 
-export default loginPwd;
+export default LoginPwd;

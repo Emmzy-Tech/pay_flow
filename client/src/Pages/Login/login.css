@@ -6,7 +6,7 @@
   background-repeat: no-repeat;
   background-clip: border-box;
   background-attachment: fixed;
-  width: 100%;
+  /* width: 100%; */
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -139,7 +139,7 @@
   color: #007bff;
   font-size: 2rem;
 }
-.password__field label{
+.password__field label {
   margin-top: 10px;
 }
 
@@ -160,7 +160,7 @@
 
 /* 2fa styles */
 
-.two__container{
+.two__container {
   text-align: center;
   background-color: white;
   height: 600px;
@@ -173,20 +173,18 @@
   font-size: 18px;
 }
 
-
-.two__container h2{
+.two__container h2 {
   color: #007bff;
-  font-size:  1.7rem;
+  font-size: 1.7rem;
 }
 
-.twofap{
-  margin-bottom: 10% ;
+.twofap {
+  margin-bottom: 10%;
 }
 
 /* Personal details design */
 
-.details__container{
-
+.details__container {
   background-color: white;
   height: 750px;
   display: flex;
@@ -196,19 +194,7 @@
   font-size: 18px;
 }
 
-.details__btn{
-  background-color: #656161;
-  cursor: pointer;
-  color: white;
-  font-size: 18px;
-  border: none;
-  margin-top: 10px;
-  width: 550px;
-  border-radius: 5px;
-  padding: 10px 40px;
-}
-
-.sub__details--container{
+.sub__details--container {
   margin-left: 25px;
   margin-top: 30px;
   justify-content: center;
@@ -221,12 +207,11 @@
   margin: 10px 0;
 }
 
-.sub__details--container p{
+.sub__details--container p {
   margin-bottom: 2%;
 }
 
-
- #user__details {
+#user__details {
   width: 550px;
   padding: 10px 20px;
   font-size: 18px;
@@ -241,13 +226,121 @@
   border: rgb(0, 153, 255) 2px solid;
 }
 
-.verify__icon{
+.verify__icon {
   width: 60px;
   height: 60px;
 }
 
-.skip{
+.skip {
   color: #007bff;
   text-decoration: none;
   font-size: larger;
+}
+
+/* Media Queries */
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+  .form__container {
+    width: 370px;
+    height: 600px;
+    padding: 50px 55px;
+    margin: 0 20px;
+  }
+  .form__container form {
+    text-align: center;
+    margin-top: -30%;
+  }
+  .two__container {
+    width: 370px;
+    height: 600px;
+    padding: 50px;
+  }
+
+  .details__container{
+    width: 370px;
+    height: 650px;
+    padding: 50px 65px;
+  }
+  
+  .sub__details--container{
+    position: relative;
+    right: 30%;
+    top: -15%;
+  }
+
+  #user__details{
+    
+    width: 350px;
+  }
+
+  #user__email {
+    width: 350px;
+    padding: 10px 15px;
+  }
+
+  #user__email::placeholder {
+    font-size: 12px;
+  }
+  .password__field {
+    align-items: center;
+    text-align: center;
+    margin-top: -20%;
+  }
+
+  #user__password {
+    width: 350px;
+  }
+  .second__btn {
+    width: 350px;
+  }
+
+  .first__btn {
+    width: 350px;
+  }
+}
+
+/* OTPInput.css */
+.otp__container {
+  justify-content: center;
+  /* height: 600px; */
+  display: flex;
+  margin-bottom: 10%;
+}
+
+.main__otp--container{
+  height: 500px;
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main__otp--container h2{
+  color: #007bff !important;
+  text-align: center;
+  font-size: 1.7rem;
+}
+.main__otp--container p{
+text-align: center;
+margin-bottom: 20px;
+}
+
+
+.otp-input {
+  width: 60px;
+  /* margin: 0 10%; */
+  height: 60px;
+  font-size: 18px;
+  text-align: center;
+  margin: 0 5px;
+  outline: none;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+ 
+}
+
+.otp-input:focus{
+  border:1px solid #007bff;
 }

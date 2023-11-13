@@ -7,7 +7,7 @@ const VerifyUser = () => {
 
 const navigate = useNavigate();
 
-const handleClick = () =>{
+const handleClick = () => {
   navigate("/info")
 }
   return (
@@ -24,7 +24,7 @@ const handleClick = () =>{
           in some<br></br> details for us
         </p>
         <button onClick={handleClick} type="submit" className="second__btn">
-          continue
+          Continue
         </button>
         <a href="/" className="skip">Skip</a>
       </div>
