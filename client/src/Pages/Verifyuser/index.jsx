@@ -1,9 +1,15 @@
 import React from "react";
 import verificationIcon from "../../Assets/Verified.png";
 import "../Login/login.css";
+import {useNavigate} from 'react-router-dom';
 
-const verifyUser = () => {
+const VerifyUser = () => {
 
+const navigate = useNavigate();
+
+const handleClick = () => {
+  navigate("/register/info")
+}
   return (
     <div className="login__container">
       <div className="two__container">
@@ -17,8 +23,8 @@ const verifyUser = () => {
           Your account has been veified now you need to fill
           in some<br></br> details for us
         </p>
-        <button id="verify__btn" type="submit" className="second__btn">
-          continue
+        <button onClick={handleClick} type="submit" className="second__btn">
+          Continue
         </button>
         <a href="/" className="skip">Skip</a>
       </div>
@@ -26,4 +32,4 @@ const verifyUser = () => {
   );
 };
 
-export default verifyUser;
+export default VerifyUser;

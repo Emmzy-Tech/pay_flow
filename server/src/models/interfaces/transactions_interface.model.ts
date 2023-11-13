@@ -1,6 +1,7 @@
 import { mongoose } from '@dolphjs/dolph/packages';
 import { IUser } from './user_interface.models';
 import { TransactionClassType, TransactionStatus, TransactionType } from '../types';
+import { IEmployee } from './employee_interface.model';
 
 export interface ITransactionMetaData {
   bankFrom: string;
@@ -10,6 +11,7 @@ export interface ITransactionMetaData {
 
 export interface ITransactions extends mongoose.Document {
   userId: IUser['_id'];
+  employeeId: IEmployee['_id'];
   amount: number;
   currentBalance: number;
   type: TransactionType;

@@ -26,6 +26,7 @@ const debitUserWallet = (userId: string, transactionId: string, amount: number, 
 
 const createTransactionDocs = async (
   userId: string,
+  employeeId: string,
   amount: number,
   currentBalance: number,
   status: TransactionStatus,
@@ -38,6 +39,7 @@ const createTransactionDocs = async (
 ) => {
   const data = {
     userId,
+    employeeId,
     currentBalance,
     currency,
     status,
@@ -59,6 +61,7 @@ const createTransactionDocs = async (
 export const processAccountDebit = async (
   {
     userId,
+    employeeId,
     currentBalance,
     amount,
     reference,
@@ -73,6 +76,7 @@ export const processAccountDebit = async (
 
   const data = await createTransactionDocs(
     userId,
+    employeeId,
     amount,
     currentBalance,
     status,

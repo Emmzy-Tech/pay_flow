@@ -6,23 +6,32 @@ import { configs } from '@/configs';
 import { createHmac } from 'crypto';
 
 export class Opay {
-  private readonly sandboxUrl = 'http://sandbox-cashierapi.opayweb.com/api/v3';
-  private readonly liveUrl = 'https://cashierapi.opayweb.com/api/v3';
+  private readonly sandboxUrl = 'https://testapi.opaycheckout.com/api/v1/international/payment/create';
+  private readonly liveUrl = 'https://liveapi.opaycheckout.com/api/v1/international/payment/create';
 
-  protected url = appInProdMode() ? this.sandboxUrl : this.liveUrl;
+  protected url = !appInProdMode() ? this.sandboxUrl : this.liveUrl;
 
   public readonly sendToBank = async ({ reference, amount, currency, country, receiver, reason }: SendMoneyType) => {
-    const endpoint = `${this.url}/transfer/toBank`;
+    const endpoint = `${this.url}`;
     const data = {
-      amount,
+      amount: {
+        currency,
+        total: amount,
+      },
       country,
-      currency,
-      reason,
-      receiver,
+      payMethod: 'BankTransfer',
+      product: {
+        description: 'Payment for monthly salary',
+        name: 'Salaray Payment',
+      },
+      bankAccountNumber: receiver.bankAccountNumber,
+      customerName: receiver.name,
       reference,
+      callbackUrl: 'https://testapi.opaycheckout.com/api/v1/international/print',
     };
 
     const authorization = toHmac(data, configs.opay.secret);
+    console.log(authorization, this.url, configs.opay.secret);
     try {
       const res = await postRequest({
         endpoint,

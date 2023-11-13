@@ -28,11 +28,19 @@ const authenticate = (client: any, next: any) => {
     if (!token) return next(new UnauthorizedException('you cannot access this resource without auth token'));
 
     const decodeToken = async () => {
-      const decodeToken = await verifyJWTwithHMAC({ token, secret: configs.jwt.secret });
+      try {
+        const decodeToken = verifyJWTwithHMAC({ token, secret: configs.jwt.secret });
 
-      logger.info(decodeToken);
-      client.data.user = { id: decodeToken.sub };
-      return next();
+        logger.info(decodeToken);
+        client.data.user = { id: decodeToken.sub };
+        return next();
+      } catch (e) {
+        const errors = ['TokenExpiredError', 'NotBeforeError', 'JsonWebTokenError'];
+        if (errors.includes(e.name)) {
+          return next(new UnauthorizedException('please authenticate'));
+        }
+        next(e);
+      }
     };
     decodeToken();
   } catch (e) {

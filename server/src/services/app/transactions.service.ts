@@ -44,6 +44,7 @@ export class TransactionService extends DolphServiceHandler<Dolph> {
 
     const makePayment = await processPayment({
       userId,
+      employeeId: employee._id,
       currentBalance: hrUser.balance,
       amount,
       accountNo: employee.accountNo,

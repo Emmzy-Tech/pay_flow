@@ -3,13 +3,15 @@ import "../App.css";
 import { Link } from "react-router-dom";
 import googleLogo from '../Assets/google.png'
 
+
 const Login = () => {
-  function delay() {
-    setTimeout(2000)
-  }
+
+
+
+
     return (
         <div className="form__container">
-        <form action="">
+        <form action="" >
           <h2>Login</h2>
           <p>We are happy to have you back</p>
           <button className="first__btn">
@@ -38,7 +40,7 @@ const Login = () => {
           <button className="second__btn" type="submit">Login</button>
   
           <p className="alt">
-           Don't  have an account? <Link to='/signUp' className="link" onClick={delay} > Sign Up</Link>
+           Don't  have an account? <Link to='/signUp' className="link"  > Sign Up</Link>
           </p>
         </form>
       </div>  
