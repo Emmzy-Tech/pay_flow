@@ -1,4 +1,4 @@
-export type currencies = 'ngn' | 'usd' | 'pounds' | 'eur';
+export type currencies = 'NGN' | 'USD' | 'pounds' | 'EUR';
 
 export type ReciverType = {
   name: string;

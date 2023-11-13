@@ -1,5 +1,5 @@
 import { mongoose, transformDoc } from '@dolphjs/dolph/packages';
-import { transaction, user } from './constants/collection_names.models';
+import { employee, transaction, user } from './constants/collection_names.models';
 import paginate = require('mongoose-paginate-v2');
 import { ITransactions } from './interfaces/transactions_interface.model';
 
@@ -8,6 +8,11 @@ const TransactionSchema = new mongoose.Schema(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: user,
+      required: true,
+    },
+    employeeId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: employee,
       required: true,
     },
     amount: {

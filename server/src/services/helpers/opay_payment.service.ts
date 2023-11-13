@@ -6,8 +6,8 @@ import { configs } from '@/configs';
 import { createHmac } from 'crypto';
 
 export class Opay {
-  private readonly sandboxUrl = 'http://sandbox-cashierapi.opayweb.com/api/v3';
-  private readonly liveUrl = 'https://cashierapi.opayweb.com/api/v3';
+  private readonly sandboxUrl = 'https://testapi.opaycheckout.com/api/v1/international/payment/create';
+  private readonly liveUrl = 'https://liveapi.opaycheckout.com/api/v1/international/payment/create';
 
   protected url = appInProdMode() ? this.sandboxUrl : this.liveUrl;
 
