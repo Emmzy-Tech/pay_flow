@@ -1,9 +1,16 @@
 import React from "react";
 import "../Login/login.css";
-import googleLogo from '../../Assets/google.png'
+// import googleLogo from '../../Assets/google.png'
 import { Link } from "react-router-dom";
+import {useNavigate} from 'react-router-dom'
 
 const Register = () => {
+
+const navigate = useNavigate();
+
+const handleClick = () => {
+    navigate("/register/password")
+  }  
 
   return (
     <div className="login__container">
@@ -11,16 +18,16 @@ const Register = () => {
       <form action="" className="log">
         <h2>Sign Up</h2>
         <p>We are excited to have you join us</p>
-        <button className="first__btn">
+        {/* <button className="first__btn">
             <img src={googleLogo} alt="" srcset="" className="google-logo"/>
           Sign in with Google
-        </button>
-        <br />
-        <div className="line-container">
+        </button> */}
+        {/* <br /> */}
+        {/* <div className="line-container">
           <div className="line"></div>
           <span>or</span>
           <div className="line"></div>
-        </div>
+        </div> */}
 
         <div className="email__container">
           <br />
@@ -40,7 +47,7 @@ const Register = () => {
             <a href="/signup  " className="link"> Privacy Terms and Conditions</a>
           </p>
         </div>
-        <button className="second__btn" type="submit">Sign Up</button>
+        <button className="second__btn" type="submit" onClick={handleClick}>Sign Up</button>
 
         <p className="alt">
           Have an account? <Link to="/login" className="link" >Login here</Link>

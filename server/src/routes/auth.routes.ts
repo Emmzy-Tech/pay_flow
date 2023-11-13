@@ -1,6 +1,6 @@
 import { AuthController } from '@/controllers/auth.controller';
 import { store } from '@/utils';
-import { login, logout, refreshTokens, sendOtp, verifyOtp } from '@/validations';
+import { addPassword, login, logout, refreshTokens, sendOtp, verifyOtp } from '@/validations';
 import { DolphRouteHandler } from '@dolphjs/dolph/classes';
 import { Dolph, reqValidatorMiddleware } from '@dolphjs/dolph/common';
 import { NextFunction, Request, Response } from 'express';
@@ -17,7 +17,8 @@ export class AuthRouter extends DolphRouteHandler<Dolph> {
   path: string = '/v1/auth';
 
   initRoutes(): void {
-    this.router.post(`${this.path}/register`, reqValidatorMiddleware(sendOtp), this.controller.sendOtp);
+    this.router.post(`${this.path}/send-otp`, reqValidatorMiddleware(sendOtp), this.controller.sendOtp);
+    this.router.post(`${this.path}/add-password`, reqValidatorMiddleware(addPassword), this.controller.addPassword);
     this.router.get(
       `${this.path}/refresh-tokens/:token`,
       reqValidatorMiddleware(refreshTokens),
@@ -39,11 +40,15 @@ export class AuthRouter extends DolphRouteHandler<Dolph> {
       passport.authenticate('google', { scope: ['profile', 'email'], state: JSON.stringify({ intent: 'login' }) })(req, res);
     });
     this.router.get(`${this.path}/google-web/callback`, (req: Request, res: Response, next: NextFunction) => {
+      console.log('middleware reached');
       //@ts-expect-error
       const intent = req.query.state ? JSON.parse(req.query.state).intent : null;
       store.intent = intent;
+
+      console.log(`user==${req.user}`);
+
       passport.authenticate('google', {
-        successRedirect: 'http://localhost:3300/v1/auth/oauth/success',
+        // successRedirect: 'http://localhost:3300/v1/auth/oauth/success',
         failureRedirect: 'http://localhost:3300/v1/auth/oauth/failure',
       })(req, res, next);
     });

@@ -1,4 +1,5 @@
 import Joi = require('joi');
+import { password } from './utils/custom.validation';
 
 export const newEmployee = {
   body: Joi.object().keys({
@@ -23,8 +24,40 @@ export const updateEmployee = {
   }),
 };
 
+export const updateUser = {
+  body: Joi.object().keys({
+    firstName: Joi.string(),
+    lastName: Joi.string(),
+    otherName: Joi.string(),
+    position: Joi.string(),
+  }),
+};
+
 export const getEmployeeById = {
-  params: Joi.object().keys({
-    if: Joi.string().required(),
+  param: Joi.object().keys({
+    id: Joi.string().required(),
+  }),
+};
+
+export const getEmployees = {
+  query: Joi.object().keys({
+    limit: Joi.number(),
+    page: Joi.number(),
+    keyword: Joi.string(),
+    sortBy: Joi.string(),
+    orderBy: Joi.string(),
+  }),
+};
+
+export const confirmPassword = {
+  param: Joi.object().keys({
+    password: Joi.string().min(6).max(30).required().custom(password),
+  }),
+};
+
+export const updatePassword = {
+  body: Joi.object().keys({
+    newPassword: Joi.string().min(6).max(30).required().custom(password),
+    oldPassword: Joi.string().min(6).max(30).required().custom(password),
   }),
 };

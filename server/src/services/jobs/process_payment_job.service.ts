@@ -11,6 +11,7 @@ export const processPayment = async ({
   amount,
   currentBalance,
   receiver,
+  employeeId,
   bank,
   accountNo,
   receivingUserId,
@@ -26,8 +27,8 @@ export const processPayment = async ({
     const creditAccount = await new Opay().sendToBank({
       reference,
       amount,
-      currency: 'ngn',
-      country: 'Nigeria',
+      currency: 'NGN',
+      country: 'NG',
       reason: 'payment for montly salary',
       receiver,
     });
@@ -43,6 +44,7 @@ export const processPayment = async ({
         userId,
         currentBalance,
         amount,
+        employeeId,
         reference: transactionReference,
         description,
         status: 'pending',

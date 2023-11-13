@@ -19,7 +19,7 @@
     "start": "npm run build & prod:start"
   },
   "dependencies": {
-    "@dolphjs/dolph": "^1.0.3",
+    "@dolphjs/dolph": "1.0.5",
     "axios": "^1.6.0",
     "cloudinary": "^1.41.0",
     "cookie-parser": "^1.4.6",
@@ -28,6 +28,7 @@
     "express-session": "^1.17.3",
     "handlebars": "^4.7.8",
     "joi": "^17.11.0",
+    "js-sha512": "^0.8.0",
     "mjml": "^4.14.1",
     "moment": "^2.29.4",
     "mongoose-paginate-v2": "^1.7.4",
@@ -35,6 +36,7 @@
     "passport": "^0.6.0",
     "passport-google-oauth2": "^0.2.0",
     "passport-google-oauth20": "^2.0.0",
+    "passport-jwt": "^4.0.1",
     "socket.io": "^4.7.2",
     "toobusy-js": "^0.5.1"
   },
@@ -51,6 +53,7 @@
     "@types/passport": "^1.0.14",
     "@types/passport-google-oauth2": "^0.1.6",
     "@types/passport-google-oauth20": "^2.0.13",
+    "@types/passport-jwt": "^3.0.13",
     "@types/toobusy-js": "^0.5.2",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
     "@typescript-eslint/parser": "^6.7.4",

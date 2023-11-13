@@ -47,7 +47,20 @@ export class UserService extends DolphServiceHandler<Dolph> {
     return this.userModel.findOneAndUpdate({ _id }, data, { new: true });
   };
 
-  public readonly getEmplyees = async (limit: number, page: number, sortBy: string, orderBy: string, keyword?: string) => {};
+  public readonly getEmplyees = async (limit: number, page: number, sortBy: string, orderBy: string, keyword?: string) => {
+    let filter: any = {};
+    if (keyword?.length) {
+      filter = { fullname: { $regex: keyword, $options: 'i' } };
+    }
+
+    const options = {
+      limit,
+      page,
+      sort: { [orderBy]: sortBy === 'asc' ? 1 : -1 },
+    };
+    //@ts-expect-error
+    return this.employeeModel.paginate(filter, options);
+  };
 
   public readonly createEmployee = async (body: any) => {
     body.amount = parseInt(body.amount).toFixed(2);

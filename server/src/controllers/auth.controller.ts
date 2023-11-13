@@ -12,9 +12,10 @@ import {
   SuccessResponse,
   TryCatchAsyncDec,
   UnauthorizedException,
+  DRequest,
+  DResponse,
 } from '@dolphjs/dolph/common';
 import { hashWithBcrypt } from '@dolphjs/dolph/utilities';
-import { Request, Response } from 'express';
 
 const services = new AppServices();
 
@@ -24,7 +25,7 @@ export class AuthController extends DolphControllerHandler<Dolph> {
   }
 
   @TryCatchAsyncDec
-  public async sendOtp(req: Request, res: Response) {
+  public async sendOtp(req: DRequest, res: DResponse) {
     const user = await services.userService.findByEmail(req.body.email);
     const emailTaken = 'an account with this email aready exists, try logging in';
 
@@ -44,7 +45,6 @@ export class AuthController extends DolphControllerHandler<Dolph> {
       if (!user) {
         const newUser = await services.userService.create({
           email: req.body.email,
-          password: await hashWithBcrypt({ pureString: req.body.password, salt: 11 }),
         });
 
         otp = await newUser.generateOtp();
@@ -62,7 +62,20 @@ export class AuthController extends DolphControllerHandler<Dolph> {
   }
 
   @TryCatchAsyncDec
-  public async verifyOtp(req: Request, res: Response) {
+  public async addPassword(req: DRequest, res: DResponse) {
+    const user = await services.userService.findByEmail(req.body.email);
+
+    if (!user) throw new BadRequestException('user not found');
+
+    user.password = await hashWithBcrypt({ pureString: req.body.password, salt: 11 });
+
+    if (!(await user.save())) throw new InternalServerErrorException('cannot process request');
+
+    SuccessResponse({ res, body: { status: 'success', msg: 'password set successfully' } });
+  }
+
+  @TryCatchAsyncDec
+  public async verifyOtp(req: DRequest, res: DResponse) {
     const user = await services.userService.findByEmail(req.body.email);
 
     if (!user) throw new BadRequestException('user not found');
@@ -82,13 +95,13 @@ export class AuthController extends DolphControllerHandler<Dolph> {
   }
 
   @TryCatchAsyncDec
-  public async logout(req: Request, res: Response) {
+  public async logout(req: DRequest, res: DResponse) {
     if (!(await logout(req.body.token))) throw new InternalServerErrorException('cannot process request');
     SuccessResponse({ res, body: { msg: 'user has been logged out', status: 'success' } });
   }
 
   @TryCatchAsyncDec
-  public async refreshTokens(req: Request, res: Response) {
+  public async refreshTokens(req: DRequest, res: DResponse) {
     const refreshTokenDoc = await verifyToken(req.params.token, 'refresh');
 
     const user = await services.userService.findById(refreshTokenDoc.userId);
@@ -110,7 +123,7 @@ export class AuthController extends DolphControllerHandler<Dolph> {
   }
 
   @TryCatchAsyncDec
-  public async login(req: Request, res: Response) {
+  public async login(req: DRequest, res: DResponse) {
     const { email, password } = req.body;
 
     const user = await services.userService.findByEmail(email);
@@ -126,7 +139,9 @@ export class AuthController extends DolphControllerHandler<Dolph> {
     if (!(await user.doesPasswordMatch(password)))
       throw new BadRequestException('invalid credentails. cross-check your login details and try again');
 
+    const metrics = await services.transactionService.getmetrics();
+
     const tokens = await generateAuthTokens(user._id);
-    SuccessResponse({ res, body: { tokens, user: sterilizeUser(user) } });
+    SuccessResponse({ res, body: { tokens, user: sterilizeUser(user), metrics } });
   }
 }
