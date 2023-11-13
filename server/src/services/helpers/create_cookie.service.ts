@@ -91,8 +91,7 @@ export const createAuthCookie = async (id: string) => {
   }
 
   return {
-    token: { access: token.access.token, refresh: token.refresh.token },
-    options,
+    xAuthToken: { token: { access: token.access.token, refresh: token.refresh.token }, options },
   };
 };
 

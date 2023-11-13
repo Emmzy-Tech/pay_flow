@@ -14,5 +14,6 @@ export class TransactionRouter extends DolphRouteHandler<Dolph> {
 
   initRoutes(): void {
     this.router.post(`${this.path}/payment`, reqValidatorMiddleware(payEmployee), this.controller.payEmployee);
+    this.router.get(`${this.path}/history`, this.controller.getTransactionHistory);
   }
 }
