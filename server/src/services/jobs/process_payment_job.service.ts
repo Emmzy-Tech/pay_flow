@@ -28,7 +28,7 @@ export const processPayment = async ({
       reference,
       amount,
       currency: 'NGN',
-      country: 'Nigeria',
+      country: 'NG',
       reason: 'payment for montly salary',
       receiver,
     });

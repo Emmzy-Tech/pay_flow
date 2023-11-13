@@ -1,13 +1,10 @@
-import { createHmac } from 'crypto';
+import sha512 from 'js-sha512';
 
 export const toHmac = (data: any, secretKey: string): string => {
-  const sortedKeys = Object.keys(data).sort();
-  const payloadString = sortedKeys.map((key) => `${key}=${data[key]}`).join('&');
+  const hmac = sha512.sha512.hmac.create(secretKey);
+  hmac.update(JSON.stringify(data));
 
-  const hmac = createHmac('sha512', secretKey);
-  hmac.update(payloadString);
-
-  const signature = hmac.digest('hex');
+  const signature = hmac.hex();
 
   return signature;
 };
