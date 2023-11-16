@@ -3,8 +3,11 @@ import { store } from '@/utils';
 import { addPassword, login, logout, refreshTokens, sendOtp, verifyOtp } from '@/validations';
 import { DolphRouteHandler } from '@dolphjs/dolph/classes';
 import { Dolph, reqValidatorMiddleware } from '@dolphjs/dolph/common';
+import tooBusy = require('toobusy-js');
+import { ErrorResponse, HttpStatus } from '@dolphjs/dolph/common';
 import { NextFunction, Request, Response } from 'express';
 import passport = require('passport');
+import cors from 'cors';
 
 export class AuthRouter extends DolphRouteHandler<Dolph> {
   constructor() {
@@ -17,6 +20,18 @@ export class AuthRouter extends DolphRouteHandler<Dolph> {
   path: string = '/v1/auth';
 
   initRoutes(): void {
+    this.router.use((req, res, next) => {
+      if (tooBusy()) {
+        next(
+          ErrorResponse({
+            res,
+            body: { msg: 'server is busy at the moment. try again later' },
+            status: HttpStatus.SERVICE_UNAVAILABLE,
+          }),
+        );
+      }
+      next();
+    });
     this.router.post(`${this.path}/send-otp`, reqValidatorMiddleware(sendOtp), this.controller.sendOtp);
     this.router.post(`${this.path}/add-password`, reqValidatorMiddleware(addPassword), this.controller.addPassword);
     this.router.get(
