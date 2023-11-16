@@ -5,33 +5,49 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { devServer } from "../../Constants/apiUrl";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
   const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
   const handleClick = async (e) => {
     e.preventDefault();
-    fetch(`${devServer}/auth/send-otp`, {
-      body: JSON.stringify({ email }),
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      mode: "cors",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        if (data.status === 401 || 400 || 500) {
-          setError(data.message);
-        } else if (data.status === 200) {
+    axios
+      .post(
+        `${devServer}/auth/send-otp`,
+        { email },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        if (response.status === 200) {
+          localStorage.setItem("emailforpasswordsetting", email);
           navigate("/register/password");
+        } else {
+          toast.error(response.data.message, {
+            position: toast.POSITION.TOP_RIGHT,
+            closeOnClick: true,
+            draggable: true,
+            theme: "dark",
+          });
         }
       })
-      .catch((error) => console.error("Error:", error));
+      .catch((error) => {
+        console.error("An erorr occured", error);
+        toast.error("An error occurred. Please try again later.", {
+          position: toast.POSITION.TOP_RIGHT,
+          closeOnClick: true,
+          draggable: true,
+          theme: "dark",
+        });
+      });
   };
 
   return (
@@ -85,6 +101,7 @@ const Register = () => {
           </p>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };
