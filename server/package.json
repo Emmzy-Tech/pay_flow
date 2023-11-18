@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev:start": "nodemon",
+    "dev": "cross-env NODE_ENV=production nodemon",
     "dev:docker:start": "docker-compose -f docker-compose-dev.yml up",
     "dev:docker:stop": "docker-compose -f docker-compose-dev.yml down",
     "build": "swc src -d app --source-maps --copy-files",
@@ -16,13 +17,15 @@
     "lint:fix": "npm run lint -- --fix",
     "prod:start": "node app/server.js",
     "clean": "rm -r app && rm -r logs",
-    "start": "npm run build & prod:start"
+    "start": "npm run build && npm run prod:start"
   },
   "dependencies": {
-    "@dolphjs/dolph": "1.0.5",
+    "@dolphjs/dolph": "1.0.8",
     "axios": "^1.6.0",
     "cloudinary": "^1.41.0",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.3.1",
     "express-rate-limiter": "^1.3.1",
     "express-session": "^1.17.3",

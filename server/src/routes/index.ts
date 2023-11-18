@@ -1,3 +1,4 @@
+import { Router } from 'express';
 import { AuthRouter } from './auth.routes';
 import { NotificationRouter } from './notification.routes';
 import { TransactionRouter } from './transaction.routes';
