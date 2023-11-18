@@ -4,6 +4,9 @@
   "main": "index.js",
   "author": "utibeabasi ekong <github.com/Xlaez>",
   "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "dev:start": "nodemon",
     "dev": "cross-env NODE_ENV=production nodemon",
