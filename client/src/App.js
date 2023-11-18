@@ -29,7 +29,7 @@ function App() {
           <Route path="/login/auth" element={<Loginauth/>} />
           <Route path="/login/otp" element={<OtpInput isSignup={false}/>} />
           <Route
-            path="/dashboard"
+            path="/dashboard/*"
             element={
               <DashboardContextProvider>
                 <Dasboard />
