@@ -57,4 +57,11 @@ export const configs = {
     publicKey: envVars.OPAY_PUBLIC_KEY,
     id: envVars.OPAY_MERCHANT_ID,
   },
+  squad: {
+    testKey: envVars.SQUAD_TEST_KEY,
+    privateKey: envVars.SQUAD_PRIVATE_KEY,
+    publicKey: envVars.SQUAD_PUBLIC_KEY,
+    merchantId: envVars.SQUAD_MERCHANT_ID,
+    testMerchantId: envVars.SQUAD_TEST_MERCHANT_ID,
+  },
 };

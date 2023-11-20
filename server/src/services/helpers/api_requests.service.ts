@@ -40,8 +40,10 @@ export const postRequest = async ({ endpoint, data, headers }: ApiRequest) => {
     } else {
       response = await axios.post(endpoint, data);
     }
+    console.log(response);
     return response;
   } catch (e: any) {
+    console.log(e);
     console.error(`${e?.response?.status} ${JSON.stringify(e?.response?.data)}`);
     throw new Error(e?.response);
   }
