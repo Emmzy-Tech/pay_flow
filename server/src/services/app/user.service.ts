@@ -62,6 +62,16 @@ export class UserService extends DolphServiceHandler<Dolph> {
     return this.employeeModel.paginate(filter, options);
   };
 
+  public readonly getEmployeeCount = async () => {
+    const twentyFourHoursAgo = new Date();
+    twentyFourHoursAgo.setHours(twentyFourHoursAgo.getHours() - 24);
+
+    const employeeCount = await this.employeeModel.find({}).countDocuments();
+    const newEmployees = await this.employeeModel.find({ createdAt: { $gte: twentyFourHoursAgo } }).countDocuments();
+
+    return { totalEmployees: employeeCount, newEmployeesCont: newEmployees };
+  };
+
   public readonly createEmployee = async (body: any) => {
     body.amount = parseInt(body.amount).toFixed(2);
     return this.employeeModel.create(body);

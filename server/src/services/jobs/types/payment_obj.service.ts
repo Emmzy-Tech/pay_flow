@@ -5,6 +5,7 @@ import { ReciverType } from '@/services/helpers';
 
 export type PaymentType = {
   userId: string;
+  userName: string;
   amount: number;
   currentBalance: number;
   receiver: ReciverType;

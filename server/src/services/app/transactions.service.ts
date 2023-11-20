@@ -38,12 +38,13 @@ export class TransactionService extends DolphServiceHandler<Dolph> {
 
     const userBank = findBankByName(employee.bankName);
 
-    if (!userBank) throw new BadRequestException('user bank is not supported by OPAY');
+    if (!userBank) throw new BadRequestException('user bank is not supported by SQUAD');
 
-    if (amount >= hrUser.balance / 100) throw new BadRequestException('please top-up account before payment can proceed');
+    if (amount >= hrUser.balance) throw new BadRequestException('please top-up account before payment can proceed');
 
     const makePayment = await processPayment({
       userId,
+      userName: hrUser.firstName + ' ' + hrUser.lastName,
       employeeId: employee._id,
       currentBalance: hrUser.balance,
       amount,

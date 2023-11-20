@@ -4,3 +4,4 @@ export * from './api_requests.service';
 export * from './opay_payment.service';
 export * from './types';
 export * from './response_check.service';
+export * from './squad_payment.service';

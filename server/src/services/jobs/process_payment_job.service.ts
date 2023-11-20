@@ -2,7 +2,7 @@ import { mongoose } from '@dolphjs/dolph/packages';
 import { PaymentType } from './types';
 import { configs } from '@/configs';
 import { generateTransactionId } from '@/utils';
-import { Opay } from '../helpers';
+import { Opay, Squad } from '../helpers';
 import { processAccountDebit } from './process_acc_debit_job.service';
 import { InternalServerErrorException } from '@dolphjs/dolph/common';
 
@@ -15,6 +15,7 @@ export const processPayment = async ({
   bank,
   accountNo,
   receivingUserId,
+  userName,
 }: PaymentType) => {
   const session = await mongoose.startSession();
   session.startTransaction();
@@ -24,13 +25,23 @@ export const processPayment = async ({
   const transactionReference = generateTransactionId(userId);
 
   try {
-    const creditAccount = await new Opay().sendToBank({
-      reference,
+    // const creditAccount = await new Opay().sendToBank({
+    //   reference,
+    //   amount,
+    //   currency: 'NGN',
+    //   country: 'NG',
+    //   reason: 'payment for montly salary',
+    //   receiver,
+    // });
+
+    const creditAccount = await new Squad().transferToBankAccount({
+      account_name: receiver.name,
+      account_number: receiver.bankAccountNumber,
       amount,
-      currency: 'NGN',
-      country: 'NG',
-      reason: 'payment for montly salary',
-      receiver,
+      bank_code: receiver.bankCode,
+      transaction_reference: reference,
+      initiator_name: userName,
+      remark: '',
     });
 
     console.info(creditAccount);

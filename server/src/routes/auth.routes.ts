@@ -7,7 +7,6 @@ import tooBusy = require('toobusy-js');
 import { ErrorResponse, HttpStatus } from '@dolphjs/dolph/common';
 import { NextFunction, Request, Response } from 'express';
 import passport = require('passport');
-import cors from 'cors';
 
 export class AuthRouter extends DolphRouteHandler<Dolph> {
   constructor() {
