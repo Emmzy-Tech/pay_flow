@@ -36,8 +36,8 @@ const Home = ()=> {
               It’s not that hard to manage your employee, know when they start working, and leave. It comes with
               statistical features to find out workflow, and project.
             </p>
-            <Link to="/register"
-            className="text-indigo-800 text-lg font-medium leading-6 tracking-tighter whitespace-nowrap items-center bg-white w-[156px] max-w-full mt-11 px-5 py-5 rounded-[30px] self-start max-md:mt-10"
+            <Link to="/dasboard"
+            className="text-indigo-800 text-center text-lg font-medium leading-6 tracking-tighter whitespace-nowrap items-center bg-white w-[156px] max-w-full mt-11 px-5 py-5 rounded-[30px] self-start max-md:mt-10"
             >
               Get Started
             </Link>
