@@ -11,6 +11,7 @@ import Userdetails from "./Pages/Userdetails";
 import OtpInput from "./Pages/OtpInput"
 import { DashboardContextProvider } from "./Context/DashboardContext";
 import "./App.css";
+import Home from "./Pages/Home";
 
 
 
@@ -19,6 +20,7 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/register/password" element={<Password />} />
           <Route path="/register/twofactorauth" element={<Set2fa/> }/>
