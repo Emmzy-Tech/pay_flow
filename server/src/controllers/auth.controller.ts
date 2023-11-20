@@ -1,5 +1,6 @@
 import { sterilizeUser } from '@/helpers';
 import { user } from '@/models/constants/collection_names.models';
+import { ITransactions } from '@/models/interfaces/transactions_interface.model';
 import { AppServices } from '@/services/app';
 import { generateAuthTokens, logout, verifyToken } from '@/services/helpers';
 import { sendActivateAccountMail, sendOtpToUsersMail } from '@/services/mail/emails';
@@ -90,9 +91,30 @@ export class AuthController extends DolphControllerHandler<Dolph> {
 
     if (!(await user.save())) return ErrorResponse({ res, body: { message: 'cannot process request' }, status: 500 });
 
+    const metaData = {
+      transactions: [],
+      metrics: null,
+      employeeCount: {},
+    };
+
+    metaData.metrics = await services.transactionService.getmetrics();
+
+    const transactions = await services.transactionService.getTransactionHistory('');
+    let count = 0;
+
+    transactions.map((transaction: ITransactions) => {
+      count += 1;
+      if (count <= 10) {
+        metaData.transactions.push(transaction);
+      }
+      return;
+    });
+
+    metaData.employeeCount = await services.userService.getEmployeeCount();
+
     const tokens = await generateAuthTokens(user._id);
 
-    SuccessResponse({ res, body: { status: 'success', msg: 'emai verified successfully', data: tokens } });
+    SuccessResponse({ res, body: { status: 'success', msg: 'emai verified successfully', data: tokens, metaData } });
   }
 
   @TryCatchAsyncDec
@@ -159,9 +181,31 @@ export class AuthController extends DolphControllerHandler<Dolph> {
         status: 400,
       });
 
-    const metrics = await services.transactionService.getmetrics();
+    const metaData = {
+      transactions: [],
+      metrics: null,
+      employeeCount: {},
+    };
+
+    metaData.metrics = await services.transactionService.getmetrics();
+
+    const transactions = await services.transactionService.getTransactionHistory('');
+    let count = 0;
+
+    transactions.map((transaction: ITransactions) => {
+      count += 1;
+      if (count <= 10) {
+        metaData.transactions.push(transaction);
+      }
+      return;
+    });
+
+    metaData.employeeCount = await services.userService.getEmployeeCount();
 
     const tokens = await generateAuthTokens(user._id);
-    SuccessResponse({ res, body: { tokens, user: sterilizeUser(user), metrics } });
+    SuccessResponse({
+      res,
+      body: { tokens, hrData: sterilizeUser(user), metaData },
+    });
   }
 }
