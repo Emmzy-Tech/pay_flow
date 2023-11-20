@@ -1,8 +1,18 @@
-import { Box, Button, TextField } from "@mui/material";
+import React from "react";
+import {
+  Box,
+  Button,
+  TextField,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
+} from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../../Components/Header";
+import { Banks } from "../../../Assets/Data/banks";
 
 const AddEmployee = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -67,54 +77,125 @@ const AddEmployee = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Email"
+                label="Other Name (Optional)"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.email}
-                name="email"
-                error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
-                sx={{ gridColumn: "span 4" }}
+                value={values.otherName}
+                name="otherName"
+                error={!!touched.otherName && !!errors.otherName}
+                helperText={touched.otherName && errors.otherName}
+                sx={{ gridColumn: "span 2" }}
+              />
+
+              <FormControl
+                sx={{ gridColumn: "span 2" }}
+                fullWidth
+                variant="filled"
+              >
+                <InputLabel id="demo-multiple-name-label">Role</InputLabel>
+                <Select
+                  fullWidth
+                  variant="filled"
+                  label="Select Option"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.role}
+                  name="role"
+                  error={!!touched.role && !!errors.role}
+                  helperText={touched.role && errors.role}
+                  sx={{ gridColumn: "span 2" }}
+                >
+                  <MenuItem value={"frontend developer"}>
+                    Fronteend Developer
+                  </MenuItem>
+                  <MenuItem value={"designer"}>Designer</MenuItem>
+                  <MenuItem value={"project manager"}>Project Manager</MenuItem>
+                  <MenuItem value={"backend developer"}>
+                    Backend Developer
+                  </MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl
+                sx={{ gridColumn: "span 2" }}
+                fullWidth
+                variant="filled"
+                error={!!touched.selectValue && !!errors.selectValue}
+              >
+                <InputLabel id="demo-multiple-name-label">
+                  Select bank
+                </InputLabel>
+                <Select
+                  fullWidth
+                  variant="filled"
+                  label="Select Option"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.bankName}
+                  name="bankName"
+                  error={!!touched.bankName && !!errors.bankName}
+                  helperText={touched.bankName && errors.bankName}
+                  sx={{ gridColumn: "span 2" }}
+                >
+                  {Banks.map((bank, idx) => (
+                    <MenuItem value={bank.code} key={idx}>
+                      {bank.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Account Number"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.accountNumber}
+                name="accountNumber"
+                error={!!touched.accountNumber && !!errors.accountNumber}
+                helperText={touched.accountNumber && errors.accountNumber}
+                sx={{ gridColumn: "span 2" }}
               />
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Contact Number"
+                label="Amount"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.contact}
-                name="contact"
-                error={!!touched.contact && !!errors.contact}
-                helperText={touched.contact && errors.contact}
-                sx={{ gridColumn: "span 4" }}
+                value={values.amount}
+                name="amount"
+                error={!!touched.amount && !!errors.amount}
+                helperText={touched.amount && errors.amount}
+                sx={{ gridColumn: "span 2" }}
               />
-              <TextField
+
+              <FormControl
+                sx={{ gridColumn: "span 2" }}
                 fullWidth
                 variant="filled"
-                type="text"
-                label="Address 1"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address1}
-                name="address1"
-                error={!!touched.address1 && !!errors.address1}
-                helperText={touched.address1 && errors.address1}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Address 2"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address2}
-                name="address2"
-                error={!!touched.address2 && !!errors.address2}
-                helperText={touched.address2 && errors.address2}
-                sx={{ gridColumn: "span 4" }}
-              />
+              >
+                <InputLabel id="demo-multiple-name-label"
+                error={!!touched.accountNumber && !!errors.accountNumber}>Payment Duration</InputLabel>
+                <Select
+                  fullWidth
+                  variant="filled"
+                  label="Select Option"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.paymentDuration}
+                  name="paymentDuration"
+                error={!!touched.paymentDuration && !!errors.paymentDuration}
+                helperText={touched.paymentDuration && errors.paymentDuration}
+                  sx={{ gridColumn: "span 2" }}
+                >
+                  <MenuItem value={"frontend developer"}>
+                    Fronteend Developer
+                  </MenuItem>
+                  <MenuItem value={"weekly"}>Weekly</MenuItem>
+                  <MenuItem value={"monthly"}>Monthly</MenuItem>
+                </Select>
+              </FormControl>
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
@@ -134,21 +215,22 @@ const phoneRegExp =
 const checkoutSchema = yup.object().shape({
   firstName: yup.string().required("required"),
   lastName: yup.string().required("required"),
-  email: yup.string().email("invalid email").required("required"),
-  contact: yup
-    .string()
-    .matches(phoneRegExp, "Phone number is not valid")
-    .required("required"),
-  address1: yup.string().required("required"),
-  address2: yup.string().required("required"),
+  otherName: yup.string().required("required"),
+  role: yup.string().required("required"),
+  bankName: yup.string().required("required"),
+  amount: yup.string().required("required"),
+  accountNumber: yup.string().required("required"),
+  paymentDuration: yup.string().required("required"),
 });
 const initialValues = {
   firstName: "",
   lastName: "",
-  email: "",
-  contact: "",
-  address1: "",
-  address2: "",
+  otherName: "",
+  role: "",
+  bankName: "",
+  amount: "",
+  accountNumber: "",
+  paymentDuration: "",
 };
 
 export default AddEmployee;
