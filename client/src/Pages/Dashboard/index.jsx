@@ -9,6 +9,9 @@ import Topbar from '../../Components/TopBar/TopBar';
 import ErrorBoundary from '../../errorb';
 import Employees from '../../Components/DashboardContent/Employee';
 import AddEmployee from '../../Components/DashboardContent/Employee/AddEmployee';
+import AllTransactions from '../../Components/DashboardContent/Payments/AllTransactions';
+import TopUps from '../../Components/DashboardContent/Payments/TopUps';
+import Payouts from '../../Components/DashboardContent/Payments/Payouts';
 
 const Dasboard = () => {
   const [theme, colorMode] = useMode();
@@ -27,6 +30,9 @@ const Dasboard = () => {
           <Route path="/" element={<DashboardHome />} />
           <Route path="/employees" element={<Employees />} />
           <Route path="/add-employee" element={<AddEmployee />} />
+          <Route path="/transactions" element={<AllTransactions />} />
+          <Route path="/payouts" element={<Payouts />} />
+          <Route path="/top-up" element={<TopUps />} />
           
         </Routes>
         </main>
