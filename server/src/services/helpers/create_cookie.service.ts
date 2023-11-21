@@ -71,7 +71,7 @@ export const logout = async (refreshToken: string) => {
     const token = await TokenModel.findOne({ token: refreshToken, type: 'refresh' });
 
     if (!token) throw new NotFoundException('User token not found');
-    return token.remove();
+    return TokenModel.deleteOne({ token: refreshToken, type: 'refresh' });
   } catch (e) {
     throw e;
   }

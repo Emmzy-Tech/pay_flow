@@ -4,7 +4,7 @@ database:
     url: mongodb+srv://utibeabasiekong2:suoE9kuNXwG6X48w@cluster0.esbue40.mongodb.net/?retryWrites=true&w=majority
     options:
       autoIndex: true
-      useNewUrlParser: true
+      # useNewUrlParser: true
 middlewares:
   # cors:
   #   activate: true

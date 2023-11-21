@@ -133,8 +133,7 @@ export class AuthController extends DolphControllerHandler<Dolph> {
     if (!user)
       return ErrorResponse({ res, body: { message: 'refresh token does not match that of any user' }, status: 400 });
 
-    if (!(await refreshTokenDoc.remove()))
-      return ErrorResponse({ res, body: { message: 'cannot process request' }, status: 500 });
+    if (!refreshTokenDoc) return ErrorResponse({ res, body: { message: 'cannot process request' }, status: 500 });
 
     const authTokens = await generateAuthTokens(user._id);
 
