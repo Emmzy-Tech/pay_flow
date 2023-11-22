@@ -31,12 +31,12 @@ const dolph = new DolphFactory(routes, [
   (req, res, next) => {
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, authorization');
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     next();
   },
 ]);
 
-// dolph.enableCors({ origin: '*' });
+// dolph.enableCors();
 
 const httpServer = createServer(dolph.engine);
 getIo(httpServer);
@@ -46,7 +46,7 @@ getIo(httpServer);
 initPassport();
 googleOauth();
 
-httpServer.listen(3000, () => {
+httpServer.listen(3100, () => {
   logger.info('socket.io server is running');
 });
 dolph.start();

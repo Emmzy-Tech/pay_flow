@@ -21,6 +21,7 @@ export class UserRouter extends DolphRouteHandler<Dolph> {
   controller: UsersController = new UsersController();
 
   initRoutes(): void {
+    this.router.get(`${this.path}/dashboard`, this.controller.getDashboardData);
     this.router.get(
       `${this.path}/confirm-password/:password`,
       reqValidatorMiddleware(confirmPassword),
