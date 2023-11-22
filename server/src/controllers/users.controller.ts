@@ -1,6 +1,7 @@
 import { configs } from '@/configs';
 import { mediaParserOptions } from '@/constants';
 import { sterilizeUser } from '@/helpers';
+import { ITransactions } from '@/models/interfaces/transactions_interface.model';
 import { AppServices } from '@/services/app';
 import { uploadOneToCloud } from '@/services/helpers';
 import { DolphControllerHandler, JWTAuthVerifyDec } from '@dolphjs/dolph/classes';
@@ -14,6 +15,7 @@ import {
   TryCatchAsyncDec,
   DRequest,
   DResponse,
+  ErrorResponse,
 } from '@dolphjs/dolph/common';
 import { MediaParser, hashWithBcrypt } from '@dolphjs/dolph/utilities';
 
@@ -134,5 +136,36 @@ export class UsersController extends DolphControllerHandler<Dolph> {
     const employee = await services.userService.deleteEmployee(req.params.id);
     if (!employee) throw new NotFoundException('employee not found');
     SuccessResponse({ res, body: { msg: 'successfully removed employee from company database', status: 'success' } });
+  }
+
+  @TryCatchAsyncDec
+  @JWTAuthVerifyDec(configs.jwt.secret)
+  public async getDashboardData(req: DRequest, res: DResponse) {
+    const user = await services.userService.findById(req.payload.sub);
+
+    if (!user) return ErrorResponse({ res, body: { status: 'failed', message: 'cannot find user' }, status: 404 });
+
+    const metaData = {
+      transactions: [],
+      metrics: null,
+      employeeCount: {},
+    };
+
+    metaData.metrics = await services.transactionService.getmetrics();
+
+    const transactions = await services.transactionService.getTransactionHistory('');
+    let count = 0;
+
+    transactions.map((transaction: ITransactions) => {
+      count += 1;
+      if (count <= 10) {
+        metaData.transactions.push(transaction);
+      }
+      return;
+    });
+
+    metaData.employeeCount = await services.userService.getEmployeeCount();
+
+    SuccessResponse({ res, body: { message: 'successfully fetched data', user: sterilizeUser(user), metaData } });
   }
 }
