@@ -60,6 +60,9 @@ const Password = () => {
           if (response.status === 200) {
             navigate("/register/twofactorauth");
           } else {
+            console.error("Response error:", response.status);
+            console.error("Response data:", response.data);
+
             toast.error(response.data.message, {
               position: toast.POSITION.TOP_RIGHT,
               closeOnClick: true,
@@ -69,13 +72,25 @@ const Password = () => {
           }
         })
         .catch((error) => {
-          console.error("An erorr occured", error);
-          toast.error("An error occurred. Please try again later.", {
-            position: toast.POSITION.TOP_RIGHT,
-            closeOnClick: true,
-            draggable: true,
-            theme: "dark",
-          });
+          // Handle errors here
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // other than 2xx
+            console.error("Response error:", error.response.status);
+            console.error("Response data:", error.response.data);
+            toast.error(error.response.data.message, {
+              position: toast.POSITION.TOP_RIGHT,
+              closeOnClick: true,
+              draggable: true,
+              theme: "dark",
+            });
+          } else if (error.request) {
+            // The request was made but no response was received
+            console.error("No response received:", error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.error("Request error:", error.message);
+          }
         });
     }
   };
